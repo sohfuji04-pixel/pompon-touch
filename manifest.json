@@ -1,0 +1,15 @@
+{
+  "name": "ぽんぽんタッチ",
+  "short_name": "ぽんぽん",
+  "description": "赤ちゃんとペットのためのタッチ遊び",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff8ef",
+  "theme_color": "#ffb3cb",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

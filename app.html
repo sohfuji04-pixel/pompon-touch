@@ -74,8 +74,14 @@ html,body{margin:0;height:100%;overflow:hidden;background:var(--cream);font-fami
 .c17{background:linear-gradient(160deg,#fff0f5,#ffd0e0)}
 .c18{background:linear-gradient(160deg,#fffbe0,#ffe9a0)}
 .c19{background:linear-gradient(160deg,#e0f4ff,#b8e2ff)}
-.card svg{animation:cfloat 3.2s ease-in-out infinite}
-.card:nth-child(2n) svg{animation-delay:-1.6s}.card:nth-child(3n) svg{animation-duration:2.7s}
+.card canvas.ic{width:92px;height:92px;display:block;margin:0 auto 4px}
+.card canvas.ic,.card svg{animation:cfloat 3.2s ease-in-out infinite}
+.card small{min-height:2.7em}
+.grid>.card:last-child:nth-child(odd){grid-column:span 2;display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr 1fr;column-gap:16px;text-align:left;padding:12px 20px}
+.grid>.card:last-child:nth-child(odd) canvas.ic{margin:0;grid-row:span 2;align-self:center}
+.grid>.card:last-child:nth-child(odd) b{align-self:end;font-size:19px}.grid>.card:last-child:nth-child(odd) small{align-self:start;font-size:12.5px}
+.grid>.card:last-child:nth-child(odd) small{min-height:0}
+.card:nth-child(2n) .ic{animation-delay:-1.6s}.card:nth-child(3n) .ic{animation-duration:2.7s}
 @keyframes cfloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(-3deg)}}
 #stk{margin:0 6px 6px;font-size:13px;font-weight:800;color:#ff7aa2;min-height:1em}
 .vrow{display:flex;align-items:center;gap:6px;padding:6px 0;font-size:13px;font-weight:800}
@@ -149,7 +155,7 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
   <div class="grid">
     <button class="card c1" data-mode="touch">
       <svg viewBox="0 0 100 100"><circle cx="50" cy="55" r="34" fill="#ffbf86"/><path d="M22 40 L28 12 L45 26Z M78 40 L72 12 L55 26Z" fill="#ffbf86"/><path d="M28 34 L31 20 L40 28Z M72 34 L69 20 L60 28Z" fill="#ff9db8"/><ellipse cx="38" cy="53" rx="4" ry="5.5" fill="#3a2a35"/><ellipse cx="62" cy="53" rx="4" ry="5.5" fill="#3a2a35"/><ellipse cx="29" cy="64" rx="6" ry="4" fill="#ff8fb0" opacity=".5"/><ellipse cx="71" cy="64" rx="6" ry="4" fill="#ff8fb0" opacity=".5"/><path d="M43 64 q3.5 4 7 0 q3.5 4 7 0" stroke="#3a2a35" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M84 18 l3 7 7 1 -5 5 1 7 -6 -4 -6 4 1 -7 -5 -5 7 -1z" fill="#ffd84a"/></svg>
-      <b>タッチであそぼ</b><small>どうぶつ・シャボン玉<br>0〜3さい</small>
+      <b>タッチであそぼ</b><small>さわると どうぶつが<br>ぽよん！</small>
     </button>
     <button class="card c6" data-mode="poop">
       <svg viewBox="0 0 100 100"><path d="M44 38 Q54 20 61 27 Q61 35 54 39Z" fill="#b9824f"/><ellipse cx="50" cy="46" rx="17" ry="10" fill="#b9824f"/><ellipse cx="50" cy="60" rx="26" ry="12" fill="#b9824f"/><ellipse cx="50" cy="76" rx="34" ry="13" fill="#b9824f"/><ellipse cx="42" cy="59" rx="3" ry="4" fill="#3a2a35"/><ellipse cx="58" cy="59" rx="3" ry="4" fill="#3a2a35"/><path d="M44 66 q6 5 12 0" stroke="#3a2a35" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="34" cy="65" rx="5" ry="3" fill="#ff8fb0" opacity=".6"/><ellipse cx="66" cy="65" rx="5" ry="3" fill="#ff8fb0" opacity=".6"/><circle cx="82" cy="26" r="7" fill="#e3f0a0"/><circle cx="90" cy="16" r="5" fill="#e3f0a0"/><circle cx="76" cy="15" r="4" fill="#e3f0a0"/></svg>
@@ -350,7 +356,7 @@ const SFX={
 };
 
 /* ================= CANVAS ================= */
-const cv=$('#cv'), c=cv.getContext('2d'); let W=0,H=0,M=0;
+const cv=$('#cv'); let c=cv.getContext('2d'); let W=0,H=0,M=0;
 function resize(){ const d=Math.min(devicePixelRatio||1,2); W=innerWidth; H=innerHeight; M=Math.min(W,H);
   cv.width=W*d; cv.height=H*d; cv.style.width=W+'px'; cv.style.height=H+'px'; c.setTransform(d,0,0,d,0,0); }
 addEventListener('resize',resize); resize();
@@ -1304,6 +1310,51 @@ function vUI(){ document.querySelectorAll('.vrow').forEach(r=>{ const k=r.datase
 
 /* ================= OFFLINE ================= */
 if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(()=>{});
+/* ================= HOME ICONS (drawn with the same art as the games) ================= */
+const ICON={
+  touch(){ drawAnimal('neko',30,1); c.fillStyle='#ffd84a'; star(36,-30,10,4.5); c.fillStyle='#ff9ec0'; star(-38,-24,6,2.8); },
+  food(){ c.save(); c.translate(0,-8); drawAnimal('kuma',27,1,.9); c.restore(); c.save(); c.translate(24,28); drawFood('apple',14); c.restore(); },
+  fruit(){ c.fillStyle='#b07a4f'; rr(-6,0,12,38,5); c.fill(); for(const [x,y,r,cl] of[[-20,-6,22,'#6cc46a'],[20,-6,22,'#6cc46a'],[0,-22,25,'#8ad884']]) ell(x,y,r,r*.9,cl);
+    c.save(); c.translate(-14,-12); drawFood('apple',10,false); c.restore(); c.save(); c.translate(14,-4); drawFood('mikan',10,false); c.restore(); c.save(); c.translate(26,30); drawFood('peach',9); c.restore(); },
+  car(){ const col='#ff8a8a'; ell(-2,-8,24,16,col); ell(-9,-11,8,8,'#d6f0ff'); ell(8,-11,8,8,'#d6f0ff'); rr(-36,-6,72,24,12); c.fillStyle=col; c.fill(); rr(-38,8,76,6,3); c.fillStyle='#fff'; c.fill();
+    ell(31,2,4,4,'#fff3a0'); for(const x of[-20,20]){ ell(x,20,10,10,'#4a4150'); ell(x,20,5,5,'#fff'); c.fillStyle='#ff9ec0'; star(x,20,3.6,1.7); }
+    c.strokeStyle='#8a8a9a'; c.lineWidth=2; c.beginPath(); c.moveTo(-12,-22); c.lineTo(-17,-34); c.stroke(); ell(-17,-35,3,3,'#ffd84a'); },
+  switch(){ const b=[['#ffd84a',-17,-17],['#ff8fb3',17,-17],['#86c5ff',-17,17],['#9be38a',17,17]];
+    for(const [cl,x,y] of b){ ell(x,y+3,15,15,'rgba(0,0,0,.12)'); ell(x,y,15,15,cl); ell(x-5,y-6,5,3,'rgba(255,255,255,.55)',-.5); }
+    ell(-17,-18,6,6,'#fff'); c.fillStyle='#fff'; rr(12,-25,10,15,2); c.fill(); c.font='800 16px sans-serif'; c.textAlign='center'; c.textBaseline='middle'; c.fillText('♪',-17,18);
+    c.strokeStyle='#fff'; c.lineWidth=3; c.beginPath(); c.arc(17,22,7,Math.PI,0); c.stroke(); },
+  fish(){ ell(0,6,40,30,'#9fdcff'); c.strokeStyle='rgba(255,255,255,.6)'; c.lineWidth=2; c.beginPath(); c.moveTo(-28,16); c.quadraticCurveTo(0,10,28,16); c.stroke(); c.save(); c.translate(-2,4); goldfish(16,'#ff6b5a',0,0); c.restore();
+    c.save(); c.translate(24,-26); c.rotate(-.4); c.fillStyle='#ff6f9c'; rr(-2,10,4,16,2); c.fill(); ell(0,0,12,12,'#ff6f9c'); ell(0,0,10,10,'rgba(255,255,255,.9)'); c.restore(); },
+  balloon(){ for(const [x,y,cl,r] of[[-15,-6,'#ff8fab',20],[17,-12,'#7cc8ff',18]]){ c.strokeStyle='rgba(110,90,110,.5)'; c.lineWidth=1.5; c.beginPath(); c.moveTo(x,y+r*1.1); c.quadraticCurveTo(x+4,y+r*1.8,x,y+r*2.4); c.stroke();
+      ell(x,y,r,r*1.1,cl); ell(x-r*.38,y-r*.45,r*.2,r*.3,'rgba(255,255,255,.5)',-.5); for(const d of[-1,1]) ell(x+d*r*.3,y,r*.08,r*.11,INK); c.strokeStyle=INK; c.lineWidth=1.8; c.beginPath(); c.arc(x,y+r*.18,r*.14,.3,Math.PI-.3); c.stroke(); } },
+  peek(){ c.save(); c.translate(0,-10); drawAnimal('usagi',20,1); c.restore(); for(const [x,y,r,cl] of[[-22,22,18,'#7fd27a'],[22,22,18,'#7fd27a'],[0,16,22,'#8ad884']]) ell(x,y,r,r*.85,cl); rr(-38,24,76,16,8); c.fillStyle='#6cc46a'; c.fill();
+    ell(-14,20,3,3,'#ff9ec0'); ell(16,26,3,3,'#ffe066'); },
+  bath(){ c.save(); c.translate(0,-6); drawAnimal('inu',22,1); c.restore(); for(const [x,y,r] of[[-10,-24,7],[2,-28,8],[13,-23,6]]){ ell(x,y,r,r,'#fff'); c.strokeStyle='rgba(120,175,235,.8)'; c.lineWidth=1.5; c.beginPath(); c.arc(x,y,r,0,TAU); c.stroke(); }
+    c.fillStyle='#fff'; c.beginPath(); c.moveTo(-38,10); c.lineTo(38,10); c.lineTo(34,36); c.quadraticCurveTo(0,42,-34,36); c.closePath(); c.fill(); c.strokeStyle='#c7d4ee'; c.lineWidth=2.5; c.stroke(); ell(-14,24,3,3,'#ff9ec0'); ell(0,24,3,3,'#7cc8ff'); ell(14,24,3,3,'#ffe066'); },
+  brush(){ ell(0,0,36,26,'#9e3450'); ell(0,12,22,10,'#ff8fa8'); c.fillStyle='#fff'; for(let i=0;i<4;i++){ rr(-26+i*13.5,-24,12,12,4); c.fill(); rr(-26+i*13.5,14,12,10,4); c.fill(); }
+    germ(10,-12,8,'#9be38a',0,0,1); c.save(); c.translate(30,26); c.rotate(-.6); c.fillStyle='#ff8fb3'; rr(-3,0,6,24,3); c.fill(); c.fillStyle='#cfe8ff'; rr(-5,-8,10,9,2); c.fill(); c.restore(); },
+  tidy(){ c.save(); c.translate(-14,-14); c.rotate(-.15); drawToy('block1',13); c.restore(); c.save(); c.translate(16,-16); drawToy('ball',13); c.restore();
+    c.fillStyle='#ff9ec0'; rr(-34,2,68,8,4); c.fill(); c.fillStyle='#ffb3cf'; rr(-32,6,64,32,10); c.fill(); for(const d of[-1,1]) ell(d*8,18,2.5,3.2,INK); c.strokeStyle=INK; c.lineWidth=2.2; c.lineCap='round'; c.beginPath(); c.arc(0,22,5,.3,Math.PI-.3); c.stroke(); },
+  poop(){ c.save(); c.translate(0,22); drawPoo(28,false); c.restore(); ell(30,-28,6,6,'#e3f0a0'); ell(36,-36,4,4,'#e3f0a0'); },
+  piano(){ const cs=['#ff9aa8','#ffe066','#a8e37c','#86c5ff']; cs.forEach((cl,i)=>{ rr(-34+i*17.5,-2,15,40,6); c.fillStyle=cl; c.fill(); }); c.save(); c.translate(-17,-16); drawAnimal('hiyoko',13,1); c.restore(); c.save(); c.translate(17,-16); drawAnimal('kuma',13,1); c.restore(); },
+  draw(){ c.lineCap='round'; [['#ff9aa8',30],['#ffe066',22],['#86c5ff',14]].forEach(([cl,r])=>{ c.strokeStyle=cl; c.lineWidth=7; c.beginPath(); c.arc(-6,18,r,Math.PI,0); c.stroke(); });
+    c.save(); c.translate(26,-22); for(let i=0;i<5;i++){ const a=i*TAU/5; ell(Math.cos(a)*8,Math.sin(a)*8,6,6,'#ffb3d1'); } ell(0,0,6,6,'#ffe066'); c.restore(); },
+  phone(){ rr(-22,-38,44,76,12); c.fillStyle='#ff9ec0'; c.fill(); rr(-17,-28,34,50,6); c.fillStyle='#e8f6ff'; c.fill(); c.save(); c.translate(0,-4); drawAnimal('neko',12,1,.6); c.restore(); ell(0,31,4,4,'#ffc4da');
+    c.strokeStyle='#ff6f9c'; c.lineWidth=3; c.lineCap='round'; c.beginPath(); c.arc(28,-18,6,-.8,.8); c.stroke(); c.beginPath(); c.arc(28,-18,12,-.8,.8); c.stroke(); },
+  sleep(){ c.fillStyle='#ffe9a8'; c.beginPath(); c.arc(-2,2,30,0,TAU); c.fill(); c.globalCompositeOperation='destination-out'; c.beginPath(); c.arc(14,-10,26,0,TAU); c.fill(); c.globalCompositeOperation='source-over';
+    c.strokeStyle='#8a6a3a'; c.lineWidth=2.5; c.lineCap='round'; c.beginPath(); c.arc(-18,0,4,.2,Math.PI-.2); c.stroke(); ell(-20,10,5,3,'rgba(255,150,150,.6)'); c.fillStyle='#fff'; star(24,-24,5,2.2); star(32,10,3.5,1.6); },
+  contrast(){ for(let i=4;i>=1;i--){ ell(0,0,i*9,i*9,i%2?'#111':'#fff'); } ell(0,0,4,4,'#e3262e'); },
+  cat(){ c.save(); c.scale(1,1); const s=20; c.strokeStyle='#e0b93a'; c.lineWidth=3.5; c.lineCap='round'; c.beginPath(); c.moveTo(-s*.9,4); c.quadraticCurveTo(-s*1.6,14,-s*2,2); c.stroke();
+    ell(0,4,s,s*.62,'#ffd84a'); ell(s*.75,2,s*.52,s*.44,'#ffd84a'); ell(s*.55,-s*.4,s*.24,s*.24,'#ffc0a8'); ell(s*.95,-s*.15,s*.08,s*.08,'#222'); ell(s*1.27,2,s*.09,s*.09,'#ff8fa0'); c.restore(); ell(-26,-26,5,5,'#ffe066'); },
+  dog(){ const r=24; ell(0,26,20,4,'rgba(0,0,40,.18)'); ell(0,0,r,r,'#dcef3c'); c.strokeStyle='#fff'; c.lineWidth=3.5; c.beginPath(); c.arc(-r*1.25,0,r*.95,-.9,.9); c.stroke(); c.beginPath(); c.arc(r*1.25,0,r*.95,Math.PI-.9,Math.PI+.9); c.stroke();
+    c.strokeStyle='#e88a2e'; c.lineWidth=2.5; c.lineCap='round'; c.beginPath(); c.arc(26,-26,5,-.9,.6); c.stroke(); c.beginPath(); c.arc(26,-26,10,-.9,.6); c.stroke(); }
+};
+function buildIcons(){ const save=c, D=2;
+  document.querySelectorAll('#home .card').forEach(card=>{ const f=ICON[card.dataset.mode]; if(!f) return;
+    const cnv=document.createElement('canvas'); cnv.width=cnv.height=100*D; cnv.className='ic'; const x=cnv.getContext('2d'); c=x;
+    try{ x.scale(D,D); x.translate(50,50); ell(0,0,46,46,'rgba(255,255,255,.6)'); f(); }catch(e){ console.error(e); }
+    const old=card.querySelector('svg,canvas'); if(old) old.replaceWith(cnv); else card.prepend(cnv); });
+  c=save; }
 /* ================= MODE CONTROL ================= */
 const MODES={touch:TOUCH,contrast:CONTRAST,cat:CAT,dog:DOG,poop:POOP,peek:PEEK,piano:PIANO,phone:PHONE,draw:DRAW,balloon:BALLOON,bath:BATH,food:FOOD,fruit:FRUIT,car:CAR,brush:BRUSH,tidy:TIDY,switch:SWITCH,fish:FISH};
 let mode=null, raf=0, lastTs=0;
@@ -1463,9 +1514,9 @@ $('#setBack').addEventListener('click',()=>show('home'));
 $('#endClose').addEventListener('click',()=>$('#endcard').classList.remove('on'));
 applyS();
 document.querySelectorAll('.vrow').forEach(r=>{ const k=r.dataset.k; r.querySelector('.vrec').addEventListener('click',e=>vRecord(k,e.currentTarget)); r.querySelector('.vplay').addEventListener('click',()=>{ initAudio(); playVoice(k); }); r.querySelector('.vdel').addEventListener('click',()=>vDel(k)); });
-vLoadAll(); updStk();
+vLoadAll(); updStk(); buildIcons(); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(buildIcons);
 /* ================= AUTO UPDATE (GitHub Pages etc.) ================= */
-const APP_VERSION='20261107220249';
+const APP_VERSION='20261107224847';
 async function checkUpdate(){
   if(!/^https?:$/.test(location.protocol)||location.hostname.endsWith('claude.ai')) return;
   try{ const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'}); if(!r.ok) return; const j=await r.json();

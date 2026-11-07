@@ -14,8 +14,11 @@ html,body{margin:0;height:100%;overflow:hidden;background:var(--cream);font-fami
 .screen.on{display:block}
 #home{overflow-y:auto;padding:calc(env(safe-area-inset-top) + 20px) 18px calc(env(safe-area-inset-bottom) + 28px);
   background:radial-gradient(circle at 15% 0%,#ffe1ec 0,transparent 45%),radial-gradient(circle at 100% 30%,#dff3ff 0,transparent 45%),var(--cream)}
-.logo{display:flex;align-items:center;gap:12px;margin:4px 4px 6px}
-.logo h1{font-size:30px;margin:0;font-weight:800;letter-spacing:.02em;color:#ff7aa2;text-shadow:0 3px 0 #ffd6e3}
+.reload{position:absolute;right:calc(env(safe-area-inset-right) + 14px);top:calc(env(safe-area-inset-top) + 16px);display:flex;align-items:center;gap:5px;
+  border:none;background:#fff;color:#ff7aa2;font:inherit;font-weight:800;font-size:13px;padding:8px 12px;border-radius:18px;box-shadow:0 3px 0 #ffd6e3,0 6px 14px rgba(120,80,100,.12)}
+.reload svg{width:18px;height:18px}.reload.spin svg{animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.logo{padding-right:84px;display:flex;align-items:center;gap:12px;margin:4px 4px 6px}
+.logo h1{font-size:25px;white-space:nowrap;margin:0;font-weight:800;letter-spacing:.02em;color:#ff7aa2;text-shadow:0 3px 0 #ffd6e3}
 .sub{margin:0 6px 18px;font-size:14px;opacity:.75}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .card{border:none;border-radius:28px;padding:16px 12px 14px;text-align:center;font:inherit;color:inherit;cursor:pointer;
@@ -91,6 +94,7 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
 <body>
 
 <div id="home" class="screen on">
+  <button class="reload" id="reloadBtn"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66" stroke="#ff7aa2" stroke-width="2.8" fill="none" stroke-linecap="round"/><path d="M20 4v5h-5" stroke="#ff7aa2" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>こうしん</button>
   <div class="logo">
     <svg width="56" height="56" viewBox="0 0 100 100"><circle cx="50" cy="56" r="38" fill="#ffe169" stroke="#f2c43d" stroke-width="3"/><ellipse cx="44" cy="17" rx="6" ry="10" fill="#ffe169" transform="rotate(-20 44 17)"/><ellipse cx="55" cy="16" rx="5" ry="9" fill="#ffe169" transform="rotate(15 55 16)"/><ellipse cx="36" cy="52" rx="4.5" ry="6" fill="#3a2a35"/><ellipse cx="64" cy="52" rx="4.5" ry="6" fill="#3a2a35"/><circle cx="34.5" cy="49.5" r="1.8" fill="#fff"/><circle cx="62.5" cy="49.5" r="1.8" fill="#fff"/><ellipse cx="27" cy="64" rx="7" ry="4.5" fill="#ff9db8" opacity=".6"/><ellipse cx="73" cy="64" rx="7" ry="4.5" fill="#ff9db8" opacity=".6"/><path d="M43 61 L50 67 L57 61 L50 57Z" fill="#ff9a3c"/></svg>
     <h1>ぽんぽんタッチ</h1>
@@ -903,8 +907,10 @@ setInterval(()=>{ const r=$('#remain');
   if(left<10000&&!fading&&sleepGain){ fading=true; sleepGain.gain.setTargetAtTime(0,AC.currentTime,3); }
   r.textContent=`あと ${Math.ceil(left/60000)} 分で ゆっくり止まります`; },1000);
 
+$('#reloadBtn').addEventListener('click',()=>{ $('#reloadBtn').classList.add('spin');
+  try{ const u=new URL(location.href); u.searchParams.set('v',Date.now()); if(/^https?:$/.test(location.protocol)&&!location.hostname.endsWith('claude.ai')) location.replace(u.toString()); else location.reload(); }catch(e){ location.reload(); } });
 /* ================= AUTO UPDATE (GitHub Pages etc.) ================= */
-const APP_VERSION='20261107211806';
+const APP_VERSION='20261107211942';
 async function checkUpdate(){
   if(!/^https?:$/.test(location.protocol)||location.hostname.endsWith('claude.ai')) return;
   try{ const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'}); if(!r.ok) return; const j=await r.json();

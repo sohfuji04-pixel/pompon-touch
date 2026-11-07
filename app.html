@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&display=swap">
 <style>
 :root{--cream:#fff8ef;--ink:#4b3a55}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+*{touch-action:manipulation;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:var(--cream);font-family:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN",system-ui,sans-serif;color:var(--ink);overscroll-behavior:none}
 .screen{position:fixed;inset:0;display:none}
 .screen.on{display:block}
@@ -120,7 +120,22 @@ html,body{margin:0;height:100%;overflow:hidden;background:var(--cream);font-fami
 .kb.sel{transform:scale(1.05);box-shadow:0 0 0 5px #fff,0 0 0 9px #ff9ec0,0 12px 22px rgba(120,80,100,.2);animation:kbsel .5s ease-in-out infinite alternate}
 .kb.sel i{opacity:1}
 @keyframes kb{50%{transform:translateY(-4px)}}@keyframes kbsel{to{transform:scale(1.09) rotate(-1.5deg)}}
-#toKids{display:block;width:100%;border:none;background:#ff8fb3;color:#fff;font:inherit;font-weight:800;font-size:14px;border-radius:18px;padding:11px;margin:0 0 12px;box-shadow:0 4px 0 #e06f95}
+#toManual{flex:1;border:none;background:#fff;color:#ff7aa2;font:inherit;font-weight:800;font-size:14px;border-radius:18px;padding:11px;box-shadow:0 4px 0 #ffd6e3}
+.toprow{display:flex;gap:10px;margin:0 0 12px}
+#toKids{flex:1.3;display:block;border:none;background:#ff8fb3;color:#fff;font:inherit;font-weight:800;font-size:14px;border-radius:18px;padding:11px;margin:0;box-shadow:0 4px 0 #e06f95}
+.kp{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:calc(33.3% - 6px);margin:3px;border-radius:16px;padding:6px 0;vertical-align:top;min-height:78px}
+.kp canvas{width:44px;height:44px}.kp span{font-size:11px;font-weight:800;margin-top:2px}.kp.empty{background:#f6f1f8;border:2px dashed #e5d9ec}.kp.empty span{opacity:.5}
+#kMode button{font-size:12px;padding:10px 4px}
+.knote{font-size:12.5px!important;opacity:1!important;line-height:1.6;background:#fff6f9;border-radius:12px;padding:8px 10px;margin:10px 0!important}.knote b{color:#ff6f9c;font-size:14px}
+#kpick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kt{position:relative;border:2.5px solid transparent;background:#f7f3f9;border-radius:16px;padding:6px 2px 6px;font:inherit;font-weight:800;font-size:11px;color:#5a4a6a}
+.kt canvas{width:40px;height:40px;display:block;margin:0 auto 2px}.kt.on{border-color:#ff8fb3;background:#fff0f5}
+.kt b{position:absolute;top:-7px;right:-5px;width:24px;height:24px;border-radius:50%;background:#ff6f9c;color:#fff;font-size:13px;display:grid;place-items:center;box-shadow:0 2px 4px rgba(0,0,0,.15)}
+#manual{overflow-y:auto;padding:calc(env(safe-area-inset-top) + 16px) 16px 40px;background:linear-gradient(180deg,#fff3f8,#f2f0ff)}
+.man section{background:#fff;border-radius:22px;padding:14px 16px;margin-top:14px;box-shadow:0 4px 14px rgba(120,80,100,.08)}
+.man h3{margin:0 0 8px;font-size:16px;color:#5a4a6a}.man p,.man li{font-size:13px;line-height:1.75}.man ul{margin:0;padding-left:1.2em}.man li{margin:4px 0}.man b{color:#ff6f9c}.man small{opacity:.75}
+.mrow{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px dashed #f0e3ea}.mrow:last-child{border:none}
+.mrow canvas{width:46px;height:46px;flex:none}.mrow div{font-size:12.5px;line-height:1.5}.mrow div b{display:block;font-size:14px;color:#5a4a6a}
 .c10{background:linear-gradient(160deg,#fffaf0,#ffe9c9)}
 
 .note{margin:22px 4px 0;background:#fff;border-radius:20px;padding:14px 16px;font-size:12.5px;line-height:1.7;box-shadow:0 4px 14px rgba(120,80,100,.08)}
@@ -187,7 +202,7 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
     <svg width="56" height="56" viewBox="0 0 100 100"><circle cx="50" cy="56" r="38" fill="#ffe169" stroke="#f2c43d" stroke-width="3"/><ellipse cx="44" cy="17" rx="6" ry="10" fill="#ffe169" transform="rotate(-20 44 17)"/><ellipse cx="55" cy="16" rx="5" ry="9" fill="#ffe169" transform="rotate(15 55 16)"/><ellipse cx="36" cy="52" rx="4.5" ry="6" fill="#3a2a35"/><ellipse cx="64" cy="52" rx="4.5" ry="6" fill="#3a2a35"/><circle cx="34.5" cy="49.5" r="1.8" fill="#fff"/><circle cx="62.5" cy="49.5" r="1.8" fill="#fff"/><ellipse cx="27" cy="64" rx="7" ry="4.5" fill="#ff9db8" opacity=".6"/><ellipse cx="73" cy="64" rx="7" ry="4.5" fill="#ff9db8" opacity=".6"/><path d="M43 61 L50 67 L57 61 L50 57Z" fill="#ff9a3c"/></svg>
     <h1>ぽんぽんタッチ</h1>
   </div>
-  <button id="toKids">👶 こどもホームに もどる</button>
+  <div class="toprow"><button id="toKids">👶 こどもホームへ</button><button id="toManual">📖 つかいかた</button></div>
   <p class="sub">さわると どうぶつ・おと・キラキラ。赤ちゃんとペットのためのおもちゃ箱</p>
   <div id="season"></div>
   <div id="night"><span>🌙 そろそろ ねんねの じかん？</span><button id="nightGo">ねんねの音へ</button></div>
@@ -317,10 +332,13 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
     <label class="sw">きせつの かざり（あき・ゆき・さくら など）<input type="checkbox" id="sSeason"></label></div>
   <div class="sbox"><h4>🗣 ことば</h4><label class="sw">タッチしたものの名前を しゃべる<input type="checkbox" id="sTalk"></label><p>「りんご！」「くるま！」など。スマホの読み上げ音声を使います</p></div>
   <div class="sbox"><h4>🧸 ホームに出すあそび</h4><p>オフにしたあそびはホームに表示されません</p><div class="mgrid" id="sModes"></div></div>
-  <div class="sbox"><h4>👶 こどもホーム</h4><p>絵だけの大きなボタンが6こ。1かいめのタッチで名前を言って、もういちどタッチで はじまります</p>
+  <div class="sbox"><h4>👶 こどもホーム</h4><p>アプリを ひらくと出る、こども用の 画面です。絵だけの 大きなボタンが 6こ ならび、タッチすると 名前を言って はじまります</p>
     <label class="sw">ひらいたら こどもホームを出す<input type="checkbox" id="sKids"></label>
-    <label class="sw">よくあそぶものを 自動でならべる<input type="checkbox" id="sKidsAuto"></label>
-    <div id="kpick" class="mgrid"></div><p id="kpickNote"></p></div>
+    <p style="margin-top:10px;font-weight:800;opacity:1">いまの こどもホーム</p><div id="kprev"></div>
+    <p style="margin-top:12px;font-weight:800;opacity:1">ならべかた</p>
+    <div class="seg" id="kMode"><button data-v="auto">おまかせ（よく遊ぶ順）</button><button data-v="pick">じぶんで えらぶ</button></div>
+    <input type="checkbox" id="sKidsAuto" hidden>
+    <div id="kpickWrap"><p id="kpickNote" class="knote"></p><div id="kpick"></div><button class="sbtn" id="kClear" style="margin-top:8px">えらんだものを ぜんぶ はずす</button></div></div>
   <div class="sbox"><h4>📊 あそびの きろく</h4><div id="logBox"></div></div>
   <div class="sbox"><h4>🎤 おうちの人の声</h4><p>録音すると、その場面でパパ・ママの声が流れます（3秒まで。録音はこのスマホの中だけに保存）</p>
     <div class="vrow" data-k="baa"><span>いないいないばあの「ばあ！」</span><button class="vrec">● ろくおん</button><button class="vplay">▶</button><button class="vdel">✕</button></div>
@@ -328,6 +346,35 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
     <div class="vrow" data-k="sugoi"><span>シールの「すごいね！」</span><button class="vrec">● ろくおん</button><button class="vplay">▶</button><button class="vdel">✕</button></div>
     <div id="vmsg"></div></div>
   <button class="sbtn" id="sReset">せっていを はじめにもどす</button>
+</div>
+<div id="manual" class="screen">
+  <div class="top"><button class="back" id="manBack" style="background:#fff;color:#ff7aa2;box-shadow:0 3px 0 #ffd6e3">‹ もどる</button><h2 style="color:#ff7aa2">つかいかた</h2></div>
+  <div class="man">
+    <section><h3>👋 はじめに</h3><p>「ぽんぽんタッチ」は、1さい半ごろからの お子さまと、ねこ・いぬが タッチして あそべる アプリです。広告や 課金は ありません。音量は ひかえめにして、大人と いっしょに 短い時間 あそんでください。</p></section>
+    <section><h3>👶 こどもホーム（ひらくと 最初に出る画面）</h3>
+      <ul><li>絵だけの 大きなボタンが 6こ ならびます。<b>1かい タッチ</b>すると 名前を言って、そのまま あそびが はじまります。</li>
+      <li>あそびが おわると、こどもホームに もどります。</li>
+      <li>大人用の画面（この画面）へは、こどもホームの右上「おとなの がめん」を <b>1びょうくらい 長押し</b>します。</li>
+      <li>ならべる 6この あそびは「せってい → 👶 こどもホーム」で かえられます。「おまかせ」は よく遊ぶ順、「じぶんで えらぶ」は 絵をタップした順に ならびます。</li></ul></section>
+    <section><h3>🏠 あそびを おわる方法</h3>
+      <ul><li>あそびの画面の <b>左上のおうちボタン</b>を 長押しすると もどります。</li>
+      <li>おうちボタンを タップすると 横に「もどる」ボタンが 3びょう 出るので、それを押しても もどれます（せっていで オフにできます）。</li>
+      <li>小さい子が かってに 画面を とじないよう、iPhoneは「アクセスガイド」、Androidは「アプリ固定」を つかうと 安心です。<br><small>iPhone：せってい → アクセシビリティ → アクセスガイド を オン → アプリで サイドボタンを3回 押す</small></li></ul></section>
+    <section><h3>🧸 あそび いちらん</h3><div id="manList"></div></section>
+    <section><h3>🌙 ねんねの音</h3><p>こもりうた・おなかの中の音・なきやみの音を ながせます。タップで 再生、もう一度 タップか「おとを とめる」で とまります。おやすみタイマーで 自動で 止められます。夜7時〜朝6時は ホームに「ねんねの音へ」が 出ます。</p></section>
+    <section><h3>🌸 シールと きろく</h3><p>あそびを さいごまで できたり、たくさん タッチすると「できたね！」と シールが もらえます。ホームの「シール ○まい」から シールちょうを 見られます。「せってい → あそびの きろく」で その日 あそんだ時間が わかります。</p></section>
+    <section><h3>⚙️ せってい</h3>
+      <ul><li><b>おとの大きさ・あそびタイマー・うごきの速さ</b>：お子さまに あわせて 調整できます。タイマーを つけると 時間で「おしまい」に なります。</li>
+      <li><b>🗣 ことば</b>：タッチしたものの 名前を しゃべります。</li>
+      <li><b>🎤 おうちの人の声</b>：「ばあ！」「おいしいね」「すごいね！」を パパ・ママの声で 録音できます（スマホの中だけに保存）。</li>
+      <li><b>ホームに出すあそび</b>：オフにした あそびは 大人用の画面に 出ません。</li></ul></section>
+    <section><h3>📱 ホーム画面に 追加する</h3><p>iPhone：Safariで開いて 共有ボタン →「ホーム画面に追加」。Android：Chromeの メニュー →「ホーム画面に追加」。アプリのように 全画面で ひらけます。一度 ひらけば 電波のない場所でも あそべます。</p></section>
+    <section><h3>❓ こまったときは</h3>
+      <ul><li><b>音が出ない</b>：iPhoneの 消音スイッチ（マナーモード）を オフにして、音量を上げてください。最初の1回は 画面に タッチすると 音が出るように なります。</li>
+      <li><b>新しい あそびが 出てこない</b>：大人用の画面の右上「こうしん」を 押してください。</li>
+      <li><b>名前を しゃべらない</b>：スマホの 読み上げ音声を つかっています。消音スイッチや「せってい → ことば」を たしかめてください。</li>
+      <li><b>画面が 拡大してしまう</b>：もとに もどすには 2本指で ちぢめてください。</li></ul></section>
+  </div>
 </div>
 <div id="book" class="screen">
   <div class="top"><button class="back" id="bookBack" style="background:#fff;color:#ff7aa2;box-shadow:0 3px 0 #ffd6e3">‹ もどる</button><h2 id="bookTitle" style="color:#ff7aa2">シール</h2></div>
@@ -1504,6 +1551,9 @@ cv.addEventListener('pointermove',e=>{ if(mode&&down.has(e.pointerId)) MODES[mod
 cv.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('touchmove',e=>{ if(mode) e.preventDefault(); },{passive:false});
 document.addEventListener('gesturestart',e=>e.preventDefault());
+document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
+let _lastTouchEnd=0; document.addEventListener('touchend',e=>{ const now=Date.now(); if(now-_lastTouchEnd<350&&!e.target.closest('input,textarea,select')) e.preventDefault(); _lastTouchEnd=now; },{passive:false});
+document.addEventListener('touchmove',e=>{ if(e.touches&&e.touches.length>1) e.preventDefault(); },{passive:false});
 
 // long-press exit (parent lock)
 (()=>{ const ex=$('#exit'), cf=$('#confirm'); let t0=0, id=0, holding=false, cfT=0;
@@ -1622,7 +1672,7 @@ const MODE_NAMES=[...document.querySelectorAll('#home .card')].map(b=>[b.dataset
 function applyS(){
   if(master) master.gain.setTargetAtTime(S.vol/100,AC.currentTime,.05);
   document.querySelectorAll('#home .card').forEach(b=>b.style.display=S.hidden.includes(b.dataset.mode)?'none':'');
-  $('#sVol').value=S.vol; $('#sTap').checked=S.tapExit; $('#sDim').checked=S.dim; $('#sVib').checked=S.vib; $('#sTalk').checked=S.talk; $('#sKids').checked=S.kidsHome; $('#sKidsAuto').checked=S.kidsAuto; renderKpick(); $('#sSeason').checked=S.season; $('#sNight').checked=S.nightAuto;
+  $('#sVol').value=S.vol; $('#sTap').checked=S.tapExit; $('#sDim').checked=S.dim; $('#sVib').checked=S.vib; $('#sTalk').checked=S.talk; $('#sKids').checked=S.kidsHome; renderKpick(); $('#sSeason').checked=S.season; $('#sNight').checked=S.nightAuto;
   for(const [id,key] of [['sLimit','limit'],['sSpeed','speed'],['sHold','hold']]) document.querySelectorAll('#'+id+' button').forEach(b=>b.classList.toggle('on',+b.dataset.v===S[key]));
   document.querySelectorAll('#sModes input').forEach(i=>i.checked=!S.hidden.includes(i.dataset.m));
   $('#hint').textContent=S.tapExit?'長押し or タップ→「もどる」':'長押しで おうちへ';
@@ -1631,11 +1681,23 @@ $('#sModes').innerHTML=MODE_NAMES.map(([m,n])=>`<label class="sw">${n}<input typ
 for(const [id,key] of [['sLimit','limit'],['sSpeed','speed'],['sHold','hold']]) document.querySelectorAll('#'+id+' button').forEach(b=>b.addEventListener('click',()=>{ S[key]=+b.dataset.v; saveS(); applyS(); }));
 $('#sVol').addEventListener('input',()=>{ S.vol=+$('#sVol').value; saveS(); applyS(); });
 $('#sVol').addEventListener('change',()=>{ initAudio(); SFX.tink(); });
-for(const [id,key] of [['sTap','tapExit'],['sDim','dim'],['sVib','vib'],['sTalk','talk'],['sKids','kidsHome'],['sKidsAuto','kidsAuto'],['sSeason','season'],['sNight','nightAuto']]) $('#'+id).addEventListener('change',()=>{ S[key]=$('#'+id).checked; saveS(); applyS(); });
+for(const [id,key] of [['sTap','tapExit'],['sDim','dim'],['sVib','vib'],['sTalk','talk'],['sKids','kidsHome'],['sSeason','season'],['sNight','nightAuto']]) $('#'+id).addEventListener('change',()=>{ S[key]=$('#'+id).checked; saveS(); applyS(); });
 $('#sModes').addEventListener('change',e=>{ const m=e.target.dataset.m; if(!m) return; S.hidden=S.hidden.filter(x=>x!==m); if(!e.target.checked) S.hidden.push(m); saveS(); applyS(); });
-function renderKpick(){ const box=$('#kpick'); if(!box) return; box.style.display=S.kidsAuto?'none':''; $('#kpickNote').textContent=S.kidsAuto?'いま：'+kidsModes().map(m=>KIDN[m]).join('・'):'6こまで えらべます（いま '+(S.kidsModes||[]).length+'こ）';
-  if(S.kidsAuto) return; box.innerHTML=Object.keys(KIDN).map(m=>`<label class="sw">${modeName(m)}<input type="checkbox" data-km="${m}" ${(S.kidsModes||[]).includes(m)?'checked':''}></label>`).join(''); }
-$('#kpick').addEventListener('change',e=>{ const m=e.target.dataset.km; if(!m) return; let L=(S.kidsModes||[]).filter(x=>x!==m); if(e.target.checked){ if(L.length>=6){ e.target.checked=false; return; } L.push(m); } S.kidsModes=L; saveS(); renderKpick(); });
+function kIcon(m,size){ const cv2=document.createElement('canvas'); cv2.width=cv2.height=size*2; const x=cv2.getContext('2d'), save=c; c=x; try{ x.scale(size*2/100,size*2/100); x.translate(50,50); ell(0,0,46,46,'rgba(255,255,255,.75)'); ICON[m]&&ICON[m](); }catch(e){} c=save; return cv2; }
+function renderKpick(){ const prev=$('#kprev'); if(!prev) return;
+  const cur=kidsModes(); prev.innerHTML=''; cur.forEach((m,i)=>{ const d=document.createElement('div'); d.className='kp'; d.style.background=KCOL[i%6]; d.appendChild(kIcon(m,44)); const t=document.createElement('span'); t.textContent=(i+1)+' '+KIDN[m]; d.appendChild(t); prev.appendChild(d); });
+  for(let i=cur.length;i<6;i++){ const d=document.createElement('div'); d.className='kp empty'; d.innerHTML='<span>'+(i+1)+' （あき）</span>'; prev.appendChild(d); }
+  document.querySelectorAll('#kMode button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='auto')===!!S.kidsAuto));
+  $('#kpickWrap').style.display=S.kidsAuto?'none':'';
+  if(S.kidsAuto) return;
+  const L=S.kidsModes||[]; $('#kpickNote').innerHTML=`下の絵を タップして えらんでください。<b>${L.length} / 6</b> こ えらびました。<br>もう一度 タップすると はずれます。えらんだ順に ならびます。`;
+  const box=$('#kpick'); box.innerHTML=''; Object.keys(KIDN).forEach(m=>{ const n=L.indexOf(m); const t=document.createElement('button'); t.className='kt'+(n>=0?' on':''); t.dataset.km=m;
+    t.appendChild(kIcon(m,40)); const sp=document.createElement('span'); sp.textContent=modeName(m); t.appendChild(sp); if(n>=0){ const bd=document.createElement('b'); bd.textContent=n+1; t.appendChild(bd); } box.appendChild(t); }); }
+$('#kpick').addEventListener('click',e=>{ const t=e.target.closest('.kt'); if(!t) return; const m=t.dataset.km; let L=(S.kidsModes||[]).slice(); const i=L.indexOf(m);
+  if(i>=0) L.splice(i,1); else { if(L.length>=6){ $('#kpickNote').innerHTML='<b style="color:#e0405f">6こ えらんであります。</b>どれかを タップして はずしてから えらんでください。'; return; } L.push(m); }
+  S.kidsModes=L; saveS(); renderKpick(); });
+document.querySelectorAll('#kMode button').forEach(b=>b.addEventListener('click',()=>{ S.kidsAuto=b.dataset.v==='auto'; if(!S.kidsAuto&&!(S.kidsModes||[]).length) S.kidsModes=kidsModesAuto(); saveS(); renderKpick(); }));
+$('#kClear').addEventListener('click',()=>{ S.kidsModes=[]; saveS(); renderKpick(); });
 $('#sReset').addEventListener('click',()=>{ S=Object.assign({},DEF,{hidden:[]}); saveS(); applyS(); });
 $('#gearBtn').addEventListener('click',()=>{ applyS(); renderLog(); show('settings'); $('#settings').scrollTop=0; });
 $('#setBack').addEventListener('click',()=>{ renderRec(); show('home'); });
@@ -1648,7 +1710,8 @@ $('#stk').addEventListener('click',()=>{ renderBook(); show('book'); $('#book').
 $('#bookBack').addEventListener('click',()=>show('home'));
 /* ================= KIDS HOME ================= */
 function homeId(){ return S.kidsHome?'kids':'home'; }
-function kidsModes(){ if(!S.kidsAuto&&S.kidsModes&&S.kidsModes.length) return S.kidsModes.slice(0,6);
+function kidsModes(){ if(!S.kidsAuto&&S.kidsModes&&S.kidsModes.length) return S.kidsModes.slice(0,6); return kidsModesAuto(); }
+function kidsModesAuto(){
   const tot={}; for(const d of Object.values(LOG)) for(const [m,v] of Object.entries(d)) tot[m]=(tot[m]||0)+v;
   const fav=Object.entries(tot).filter(([m])=>KIDN[m]&&m!=='cat'&&m!=='dog'&&!S.hidden.includes(m)).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
   const out=[...fav]; for(const m of KDEF) if(!out.includes(m)) out.push(m); return out.slice(0,6); }
@@ -1656,11 +1719,10 @@ var ksel=null, kselT=0;
 function renderKids(){ const g=$('#kgrid'); g.innerHTML=''; ksel=null;
   kidsModes().forEach((m,i)=>{ const b=document.createElement('button'); b.className='kb'; b.dataset.m=m; b.style.background=KCOL[i%6]; b.style.animationDelay=(-i*.4)+'s';
     const cv2=document.createElement('canvas'); cv2.width=cv2.height=220; const x=cv2.getContext('2d'), save=c; c=x; try{ x.scale(2.2,2.2); x.translate(50,50); ell(0,0,46,46,'rgba(255,255,255,.65)'); ICON[m]&&ICON[m](); }catch(e){} c=save;
-    b.appendChild(cv2); const hint=document.createElement('i'); hint.textContent='もういちど タッチ！'; b.appendChild(hint);
+    b.appendChild(cv2);
     b.addEventListener('click',()=>{ initAudio(); const now=performance.now();
-      if(ksel===m&&now-kselT<4000){ startMode(m); return; }
-      ksel=m; kselT=now; g.querySelectorAll('.kb').forEach(k=>k.classList.toggle('sel',k===b));
-      SFX.pop(); const nm=KIDN[m]; if(S.talk&&window.speechSynthesis) say(nm); else sparkle(0); });
+      if(ksel) return; ksel=m; b.classList.add('sel'); SFX.pop(); if(S.talk&&window.speechSynthesis) say(KIDN[m]); else sparkle(0);
+      setTimeout(()=>{ b.classList.remove('sel'); startMode(m); ksel=null; },550); });
     g.appendChild(b); }); }
 // long-press button to the adult screen
 (()=>{ const btn=$('#kAdult'); let t0=0, id=0, on=false;
@@ -1670,10 +1732,14 @@ function renderKids(){ const g=$('#kgrid'); g.innerHTML=''; ksel=null;
   btn.addEventListener('touchstart',start,{passive:false}); btn.addEventListener('mousedown',start);
   ['touchend','touchcancel','mouseup','mouseleave'].forEach(n=>btn.addEventListener(n,stop)); btn.addEventListener('contextmenu',e=>e.preventDefault()); })();
 $('#toKids').addEventListener('click',()=>{ renderKids(); show('kids'); });
+const HOWTO={touch:'画面を さわると 動物が出ます。動物を3回さわると くるりん！',food:'お皿の食べものを タップすると 動物が もぐもぐ食べます',fruit:'木の実を タップすると かごに ぽとん。木をさわると ゆれます',car:'どこを タップしても 乗りものが ぷっぷー と鳴って はねます',switch:'下の4つのボタンで 電気・ドア・音楽・にじ が うごきます',fish:'金魚を タップすると すくえます。5ひきで たいりょう',balloon:'風船を タップすると われて、動物が パラシュートで おりてきます',peek:'草むらを タップすると いないいない…ばあ！',bath:'動物を こすると あわあわ。タップで シャワーが ふります',brush:'歯の ばいきんを こすって やっつけます',tidy:'おもちゃを タップすると 箱に ポイッ と かたづきます',poop:'おしりを さわると うんちや おならが出て、トイレに 流れます',piano:'鍵盤を おすと 動物が うたいます。なぞると つづけて なります',draw:'なぞると にじいろの線、タップで お花',phone:'動物を えらんで でんわ。しばらくすると かかってきます',sleep:'ねかしつけ用の 音（くわしくは下）',contrast:'新生児むけの 白黒もよう。タップで 音と光',cat:'ねこ用：動くネズミや魚を ねこが つかまえて あそびます',dog:'いぬ用：動くおもちゃを タッチすると ピーピー鳴ります'};
+function renderManual(){ const box=$('#manList'); box.innerHTML=''; for(const m of Object.keys(HOWTO)){ const r=document.createElement('div'); r.className='mrow'; r.appendChild(kIcon(m,46)); const d=document.createElement('div'); d.innerHTML=`<b>${modeName(m)}</b>${HOWTO[m]}`; r.appendChild(d); box.appendChild(r); } }
+$('#toManual').addEventListener('click',()=>{ renderManual(); show('manual'); $('#manual').scrollTop=0; });
+$('#manBack').addEventListener('click',()=>show('home'));
 
 vLoadAll(); updStk(); buildIcons(); renderRec(); renderNight(); if(S.kidsHome){ renderKids(); show('kids'); } splash(); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ buildIcons(); if($('#kids').classList.contains('on')) renderKids(); });
 /* ================= AUTO UPDATE (GitHub Pages etc.) ================= */
-const APP_VERSION='20261107231336';
+const APP_VERSION='20261107232200';
 async function checkUpdate(){
   if(!/^https?:$/.test(location.protocol)||location.hostname.endsWith('claude.ai')) return;
   try{ const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'}); if(!r.ok) return; const j=await r.json();

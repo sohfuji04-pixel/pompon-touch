@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+<meta http-equiv="Cache-Control" content="no-cache">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>ぽんぽんタッチ</title>
@@ -474,8 +475,9 @@ function drawBack(k,s){
   ell(0,hy,hr,hr,col); c.stroke();
   ell(-.25*s,hy-.35*s,.25*s,.13*s,'rgba(255,255,255,.35)',-.4);
   ell(.6*s,hy-.03*s,.06*s,.09*s,INK); ell(.6*s,hy+.17*s,.1*s,.06*s,'rgba(255,130,165,.5)');
-  for(const d of[-1,1]){ ell(d*.3*s,.7*s,.36*s,.32*s,col); c.stroke(); ell(d*.3*s,.66*s,.36*s,.3*s,'rgba(255,255,255,.18)'); ell(d*.38*s,.78*s,.12*s,.07*s,'rgba(255,130,165,.45)'); }
-  ell(0,.28*s,.17*s,.17*s,k==='usagi'?'#ffffff':'#f6e6d0'); c.stroke();
+  for(const d of[-1,1]){ ell(d*.42*s,.78*s,.52*s,.46*s,col); c.stroke(); ell(d*.42*s,.72*s,.5*s,.42*s,'rgba(255,255,255,.2)'); ell(d*.3*s,.52*s,.16*s,.09*s,'rgba(255,255,255,.55)',d*.4); ell(d*.55*s,.92*s,.17*s,.1*s,'rgba(255,130,165,.5)'); }
+  c.strokeStyle='rgba(110,70,90,.35)'; c.lineWidth=s*.05; c.beginPath(); c.moveTo(0,.62*s); c.quadraticCurveTo(s*.03,.9*s,0,1.2*s); c.stroke();
+  ell(0,.22*s,.17*s,.17*s,k==='usagi'?'#ffffff':'#f6e6d0'); c.stroke();
 }
 function drawPoo(s,gold){
   const a=gold?'#ffcf33':'#b9824f', b=gold?'#fff0a0':'#d3a06c';
@@ -493,7 +495,7 @@ const POOP={
     this.jv+=(-this.jy)*70*dt; this.jv*=Math.pow(.03,dt); this.jy+=this.jv*dt; this.sq*=Math.pow(.005,dt);
     const g=this.geo();
     for(const p of this.poops){ p.age+=dt;
-      if(p.st==='out'){ p.k=Math.min(1,p.age/.35); p.x=g.cx; p.y=g.cy+g.s*.95+p.s*.9*p.k; if(p.age>.5){ p.st='fall'; p.vy=80; } }
+      if(p.st==='out'){ p.k=Math.min(1,p.age/.35); p.x=g.cx; p.y=g.cy+g.s*1.12+p.s*.9*p.k; if(p.age>.5){ p.st='fall'; p.vy=80; } }
       else if(p.st==='fall'){ p.vy+=1500*(M/420)*dt; p.y+=p.vy*dt; p.rot+=dt*2.5;
         if(p.y>=g.by+p.s*.15){ p.y=g.by+p.s*.15; p.x=g.bx+(R()-.5)*g.wrx*.6; p.st='in'; p.rot=0;
           SFX.plop(); burst(p.x,g.by,10,['#9fdcff','#c8ecff','#ffffff'],.8); popText(g.bx+M*.26,g.by-M*.12,'ぽちゃん','#4aa6e8',M*.065);
@@ -517,7 +519,7 @@ const POOP={
       SFX.puri(); popText(g.cx+g.s*1.25,g.cy+g.s*.7,gold?'きんのうんち！':'ぷりっ',gold?'#e0a800':'#a8703f',M*.075);
       if(gold) sparkle(.15);
     } else { const t=R()*3|0; SFX.fart(t); this.jv=-(t===1?750:520)*(M/420);
-      for(let i=0;i<(t===1?9:6);i++) this.puffs.push({x:g.cx+(R()-.5)*g.s*.4,y:g.cy+g.s*1.05,vx:(R()-.5)*260,vy:60+R()*200,r:M*.035+R()*M*.03,life:1,col:['#eef7b8','#fff2a8','#dff2c2'][R()*3|0]});
+      for(let i=0;i<(t===1?9:6);i++) this.puffs.push({x:g.cx+(R()-.5)*g.s*.4,y:g.cy+g.s*1.2,vx:(R()-.5)*260,vy:60+R()*200,r:M*.035+R()*M*.03,life:1,col:['#eef7b8','#fff2a8','#dff2c2'][R()*3|0]});
       popText(g.cx-g.s*1.35,g.cy+g.s*.8,['ぷっ','ぷぅ〜','ぷぷぷっ'][t],'#8fae2a',M*.08); }
     if(this.n%6===0) this.ci=(this.ci+1)%this.chars.length;
     if(this.poops.length>10) this.poops.shift();
@@ -837,6 +839,16 @@ setInterval(()=>{ const r=$('#remain');
   if(left<=0){ stopSleep(); $('#nowp').textContent='おやすみなさい 🌙'; return; }
   if(left<10000&&!fading&&sleepGain){ fading=true; sleepGain.gain.setTargetAtTime(0,AC.currentTime,3); }
   r.textContent=`あと ${Math.ceil(left/60000)} 分で ゆっくり止まります`; },1000);
+
+/* ================= AUTO UPDATE (GitHub Pages etc.) ================= */
+const APP_VERSION='20261107211159';
+async function checkUpdate(){
+  if(!/^https?:$/.test(location.protocol)||location.hostname.endsWith('claude.ai')) return;
+  try{ const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'}); if(!r.ok) return; const j=await r.json();
+    if(j.v&&j.v!==APP_VERSION){ if(!mode&&!curId) location.reload(); else window._pendingReload=true; } }catch(e){}
+}
+setInterval(checkUpdate,60000); document.addEventListener('visibilitychange',()=>{ if(!document.hidden) checkUpdate(); }); setTimeout(checkUpdate,3000);
+const _goHome=goHome; goHome=function(){ _goHome(); if(window._pendingReload) location.reload(); };
 </script>
 </body>
 </html>

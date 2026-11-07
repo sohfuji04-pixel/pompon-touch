@@ -17,6 +17,7 @@
 <title>ぽんぽんタッチ</title>
 <script>
   // いつも最新版を開くための入口。毎回ちがうURLで本体を読むので、古い版がキャッシュから出ない。
+  if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(()=>{});
   location.replace('app.html?v=' + Date.now());
 </script>
 </head>

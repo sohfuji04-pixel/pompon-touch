@@ -109,6 +109,18 @@ html,body{margin:0;height:100%;overflow:hidden;background:var(--cream);font-fami
 .lgr{display:grid;grid-template-columns:7.5em 1fr 3em;align-items:center;gap:8px;font-size:12px;font-weight:800;margin:5px 0}
 .lgr i{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,#ffb3cf,#ff8fb3)}.lgr em{font-style:normal;opacity:.7;text-align:right}
 .lgw{display:flex;align-items:flex-end;gap:8px;height:84px;margin-top:12px}.lgw div{flex:1;text-align:center}.lgw i{display:block;background:#b9a6ff;border-radius:6px 6px 2px 2px;margin-bottom:4px}.lgw small{font-size:11px;opacity:.7}
+#kids{background:radial-gradient(circle at 20% 0%,#ffe1ec 0,transparent 50%),radial-gradient(circle at 100% 100%,#dff3ff 0,transparent 50%),#fff8ef;overflow:hidden}
+#kAdult{position:absolute;right:calc(env(safe-area-inset-right) + 10px);top:calc(env(safe-area-inset-top) + 10px);border:none;border-radius:16px;padding:7px 12px;font:inherit;font-weight:800;font-size:11px;color:#a08ab0;
+  background:linear-gradient(90deg,#ffd6e3 calc(var(--p,0)*100%),rgba(255,255,255,.8) 0);touch-action:none}
+#kgrid{position:absolute;left:calc(env(safe-area-inset-left) + 14px);right:calc(env(safe-area-inset-right) + 14px);top:calc(env(safe-area-inset-top) + 50px);bottom:calc(env(safe-area-inset-bottom) + 14px);
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);gap:14px}
+.kb{position:relative;border:none;border-radius:32px;display:grid;place-items:center;box-shadow:0 7px 0 rgba(0,0,0,.07),0 12px 22px rgba(120,80,100,.12);transition:transform .15s;animation:kb 3s ease-in-out infinite;touch-action:manipulation;overflow:hidden}
+.kb canvas{width:min(78%,100%);height:auto;max-height:86%;aspect-ratio:1;object-fit:contain}
+.kb i{position:absolute;bottom:8px;left:0;right:0;font-style:normal;font-size:12px;font-weight:800;color:#ff6f9c;opacity:0;transition:opacity .2s}
+.kb.sel{transform:scale(1.05);box-shadow:0 0 0 5px #fff,0 0 0 9px #ff9ec0,0 12px 22px rgba(120,80,100,.2);animation:kbsel .5s ease-in-out infinite alternate}
+.kb.sel i{opacity:1}
+@keyframes kb{50%{transform:translateY(-4px)}}@keyframes kbsel{to{transform:scale(1.09) rotate(-1.5deg)}}
+#toKids{display:block;width:100%;border:none;background:#ff8fb3;color:#fff;font:inherit;font-weight:800;font-size:14px;border-radius:18px;padding:11px;margin:0 0 12px;box-shadow:0 4px 0 #e06f95}
 .c10{background:linear-gradient(160deg,#fffaf0,#ffe9c9)}
 
 .note{margin:22px 4px 0;background:#fff;border-radius:20px;padding:14px 16px;font-size:12.5px;line-height:1.7;box-shadow:0 4px 14px rgba(120,80,100,.08)}
@@ -164,6 +176,10 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
 </head>
 <body>
 
+<div id="kids" class="screen">
+  <button id="kAdult"><span>おとなの がめん（ながおし）</span></button>
+  <div id="kgrid"></div>
+</div>
 <div id="home" class="screen on">
   <button class="gear" id="gearBtn" aria-label="せってい"><svg viewBox="0 0 24 24"><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(0 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(45 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(90 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(135 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(180 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(225 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(270 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(315 12 12)"/><circle cx="12" cy="12" r="7.2" fill="#ff7aa2"/><circle cx="12" cy="12" r="3" fill="#fff"/></svg></button>
   <button class="reload" id="reloadBtn"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66" stroke="#ff7aa2" stroke-width="2.8" fill="none" stroke-linecap="round"/><path d="M20 4v5h-5" stroke="#ff7aa2" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>こうしん</button>
@@ -171,6 +187,7 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
     <svg width="56" height="56" viewBox="0 0 100 100"><circle cx="50" cy="56" r="38" fill="#ffe169" stroke="#f2c43d" stroke-width="3"/><ellipse cx="44" cy="17" rx="6" ry="10" fill="#ffe169" transform="rotate(-20 44 17)"/><ellipse cx="55" cy="16" rx="5" ry="9" fill="#ffe169" transform="rotate(15 55 16)"/><ellipse cx="36" cy="52" rx="4.5" ry="6" fill="#3a2a35"/><ellipse cx="64" cy="52" rx="4.5" ry="6" fill="#3a2a35"/><circle cx="34.5" cy="49.5" r="1.8" fill="#fff"/><circle cx="62.5" cy="49.5" r="1.8" fill="#fff"/><ellipse cx="27" cy="64" rx="7" ry="4.5" fill="#ff9db8" opacity=".6"/><ellipse cx="73" cy="64" rx="7" ry="4.5" fill="#ff9db8" opacity=".6"/><path d="M43 61 L50 67 L57 61 L50 57Z" fill="#ff9a3c"/></svg>
     <h1>ぽんぽんタッチ</h1>
   </div>
+  <button id="toKids">👶 こどもホームに もどる</button>
   <p class="sub">さわると どうぶつ・おと・キラキラ。赤ちゃんとペットのためのおもちゃ箱</p>
   <div id="season"></div>
   <div id="night"><span>🌙 そろそろ ねんねの じかん？</span><button id="nightGo">ねんねの音へ</button></div>
@@ -300,6 +317,10 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
     <label class="sw">きせつの かざり（あき・ゆき・さくら など）<input type="checkbox" id="sSeason"></label></div>
   <div class="sbox"><h4>🗣 ことば</h4><label class="sw">タッチしたものの名前を しゃべる<input type="checkbox" id="sTalk"></label><p>「りんご！」「くるま！」など。スマホの読み上げ音声を使います</p></div>
   <div class="sbox"><h4>🧸 ホームに出すあそび</h4><p>オフにしたあそびはホームに表示されません</p><div class="mgrid" id="sModes"></div></div>
+  <div class="sbox"><h4>👶 こどもホーム</h4><p>絵だけの大きなボタンが6こ。1かいめのタッチで名前を言って、もういちどタッチで はじまります</p>
+    <label class="sw">ひらいたら こどもホームを出す<input type="checkbox" id="sKids"></label>
+    <label class="sw">よくあそぶものを 自動でならべる<input type="checkbox" id="sKidsAuto"></label>
+    <div id="kpick" class="mgrid"></div><p id="kpickNote"></p></div>
   <div class="sbox"><h4>📊 あそびの きろく</h4><div id="logBox"></div></div>
   <div class="sbox"><h4>🎤 おうちの人の声</h4><p>録音すると、その場面でパパ・ママの声が流れます（3秒まで。録音はこのスマホの中だけに保存）</p>
     <div class="vrow" data-k="baa"><span>いないいないばあの「ばあ！」</span><button class="vrec">● ろくおん</button><button class="vplay">▶</button><button class="vdel">✕</button></div>
@@ -1473,7 +1494,7 @@ function startMode(id){
   lastTs=performance.now(); cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
 }
 function goHome(){ mode=null; cancelAnimationFrame(raf); $('#exit').style.display='none'; $('#hint').style.display='none';
-  try{ if(document.fullscreenElement) document.exitFullscreen(); }catch(e){} show('home'); }
+  try{ if(document.fullscreenElement) document.exitFullscreen(); }catch(e){} if(S.kidsHome){ renderKids(); show('kids'); } else show('home'); }
 document.querySelectorAll('.card').forEach(b=>b.addEventListener('click',()=>startMode(b.dataset.mode)));
 
 const down=new Set();
@@ -1575,7 +1596,7 @@ document.querySelectorAll('#tm button').forEach(b=>b.addEventListener('click',()
   endAt=(timerMin&&curId)?Date.now()+timerMin*60000:0; }));
 $('#vol').addEventListener('input',()=>{ if(sleepGain&&!fading) sleepGain.gain.setTargetAtTime($('#vol').value/100,AC.currentTime,.05); });
 $('#stopAll').addEventListener('click',stopSleep);
-$('#sleepBack').addEventListener('click',()=>{ stopSleep(); show('home'); });
+$('#sleepBack').addEventListener('click',()=>{ stopSleep(); if(S.kidsHome){ renderKids(); show('kids'); } else show('home'); });
 document.addEventListener('visibilitychange',()=>{ if(document.hidden&&!curId&&AC) {} });
 setInterval(()=>{ const r=$('#remain');
   if(!curId){ r.textContent=''; return; }
@@ -1589,7 +1610,11 @@ $('#reloadBtn').addEventListener('click',()=>{ $('#reloadBtn').classList.add('sp
   try{ const u=new URL(location.href); u.searchParams.set('v',Date.now()); if(/^https?:$/.test(location.protocol)&&!location.hostname.endsWith('claude.ai')) location.replace(u.toString()); else location.reload(); }catch(e){ location.reload(); } });
 
 /* ================= SETTINGS ================= */
-const DEF={vol:80,limit:0,speed:1,hold:900,tapExit:true,dim:false,vib:false,hidden:[],talk:true,season:true,nightAuto:true};
+var KIDN={touch:'どうぶつ',food:'もぐもぐ',fruit:'くだもの',car:'ぶーぶー',switch:'スイッチ',fish:'きんぎょ',balloon:'ふうせん',peek:'いないいないばあ',bath:'おふろ',brush:'はみがき',tidy:'おかたづけ',poop:'うんち',piano:'ピアノ',draw:'おえかき',phone:'もしもし',sleep:'ねんね',contrast:'しろくろ',cat:'ねこさん',dog:'わんちゃん'};
+var KCOL=['#ffd0e0','#ffe3b3','#d6f0ff','#dff5cf','#e9ddff','#fff1b8'];
+var KDEF=['touch','food','car','balloon','peek','fish'];
+
+const DEF={vol:80,limit:0,speed:1,hold:900,tapExit:true,dim:false,vib:false,hidden:[],talk:true,season:true,nightAuto:true,kidsHome:true,kidsAuto:true,kidsModes:[]};
 let S=Object.assign({},DEF);
 try{ Object.assign(S,JSON.parse(localStorage.getItem('pompon-settings')||'{}')); }catch(e){}
 function saveS(){ try{ localStorage.setItem('pompon-settings',JSON.stringify(S)); }catch(e){} }
@@ -1597,7 +1622,7 @@ const MODE_NAMES=[...document.querySelectorAll('#home .card')].map(b=>[b.dataset
 function applyS(){
   if(master) master.gain.setTargetAtTime(S.vol/100,AC.currentTime,.05);
   document.querySelectorAll('#home .card').forEach(b=>b.style.display=S.hidden.includes(b.dataset.mode)?'none':'');
-  $('#sVol').value=S.vol; $('#sTap').checked=S.tapExit; $('#sDim').checked=S.dim; $('#sVib').checked=S.vib; $('#sTalk').checked=S.talk; $('#sSeason').checked=S.season; $('#sNight').checked=S.nightAuto;
+  $('#sVol').value=S.vol; $('#sTap').checked=S.tapExit; $('#sDim').checked=S.dim; $('#sVib').checked=S.vib; $('#sTalk').checked=S.talk; $('#sKids').checked=S.kidsHome; $('#sKidsAuto').checked=S.kidsAuto; renderKpick(); $('#sSeason').checked=S.season; $('#sNight').checked=S.nightAuto;
   for(const [id,key] of [['sLimit','limit'],['sSpeed','speed'],['sHold','hold']]) document.querySelectorAll('#'+id+' button').forEach(b=>b.classList.toggle('on',+b.dataset.v===S[key]));
   document.querySelectorAll('#sModes input').forEach(i=>i.checked=!S.hidden.includes(i.dataset.m));
   $('#hint').textContent=S.tapExit?'長押し or タップ→「もどる」':'長押しで おうちへ';
@@ -1606,11 +1631,14 @@ $('#sModes').innerHTML=MODE_NAMES.map(([m,n])=>`<label class="sw">${n}<input typ
 for(const [id,key] of [['sLimit','limit'],['sSpeed','speed'],['sHold','hold']]) document.querySelectorAll('#'+id+' button').forEach(b=>b.addEventListener('click',()=>{ S[key]=+b.dataset.v; saveS(); applyS(); }));
 $('#sVol').addEventListener('input',()=>{ S.vol=+$('#sVol').value; saveS(); applyS(); });
 $('#sVol').addEventListener('change',()=>{ initAudio(); SFX.tink(); });
-for(const [id,key] of [['sTap','tapExit'],['sDim','dim'],['sVib','vib'],['sTalk','talk'],['sSeason','season'],['sNight','nightAuto']]) $('#'+id).addEventListener('change',()=>{ S[key]=$('#'+id).checked; saveS(); applyS(); });
+for(const [id,key] of [['sTap','tapExit'],['sDim','dim'],['sVib','vib'],['sTalk','talk'],['sKids','kidsHome'],['sKidsAuto','kidsAuto'],['sSeason','season'],['sNight','nightAuto']]) $('#'+id).addEventListener('change',()=>{ S[key]=$('#'+id).checked; saveS(); applyS(); });
 $('#sModes').addEventListener('change',e=>{ const m=e.target.dataset.m; if(!m) return; S.hidden=S.hidden.filter(x=>x!==m); if(!e.target.checked) S.hidden.push(m); saveS(); applyS(); });
+function renderKpick(){ const box=$('#kpick'); if(!box) return; box.style.display=S.kidsAuto?'none':''; $('#kpickNote').textContent=S.kidsAuto?'いま：'+kidsModes().map(m=>KIDN[m]).join('・'):'6こまで えらべます（いま '+(S.kidsModes||[]).length+'こ）';
+  if(S.kidsAuto) return; box.innerHTML=Object.keys(KIDN).map(m=>`<label class="sw">${modeName(m)}<input type="checkbox" data-km="${m}" ${(S.kidsModes||[]).includes(m)?'checked':''}></label>`).join(''); }
+$('#kpick').addEventListener('change',e=>{ const m=e.target.dataset.km; if(!m) return; let L=(S.kidsModes||[]).filter(x=>x!==m); if(e.target.checked){ if(L.length>=6){ e.target.checked=false; return; } L.push(m); } S.kidsModes=L; saveS(); renderKpick(); });
 $('#sReset').addEventListener('click',()=>{ S=Object.assign({},DEF,{hidden:[]}); saveS(); applyS(); });
 $('#gearBtn').addEventListener('click',()=>{ applyS(); renderLog(); show('settings'); $('#settings').scrollTop=0; });
-$('#setBack').addEventListener('click',()=>show('home'));
+$('#setBack').addEventListener('click',()=>{ renderRec(); show('home'); });
 $('#endClose').addEventListener('click',()=>$('#endcard').classList.remove('on'));
 applyS();
 document.querySelectorAll('.vrow').forEach(r=>{ const k=r.dataset.k; r.querySelector('.vrec').addEventListener('click',e=>vRecord(k,e.currentTarget)); r.querySelector('.vplay').addEventListener('click',()=>{ initAudio(); playVoice(k); }); r.querySelector('.vdel').addEventListener('click',()=>vDel(k)); });
@@ -1618,9 +1646,34 @@ function renderNight(){ $('#night').classList.toggle('on',S.nightAuto&&isNight()
 $('#nightGo').addEventListener('click',()=>startMode('sleep'));
 $('#stk').addEventListener('click',()=>{ renderBook(); show('book'); $('#book').scrollTop=0; });
 $('#bookBack').addEventListener('click',()=>show('home'));
-vLoadAll(); updStk(); buildIcons(); renderRec(); renderNight(); splash(); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(buildIcons);
+/* ================= KIDS HOME ================= */
+function homeId(){ return S.kidsHome?'kids':'home'; }
+function kidsModes(){ if(!S.kidsAuto&&S.kidsModes&&S.kidsModes.length) return S.kidsModes.slice(0,6);
+  const tot={}; for(const d of Object.values(LOG)) for(const [m,v] of Object.entries(d)) tot[m]=(tot[m]||0)+v;
+  const fav=Object.entries(tot).filter(([m])=>KIDN[m]&&m!=='cat'&&m!=='dog'&&!S.hidden.includes(m)).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
+  const out=[...fav]; for(const m of KDEF) if(!out.includes(m)) out.push(m); return out.slice(0,6); }
+var ksel=null, kselT=0;
+function renderKids(){ const g=$('#kgrid'); g.innerHTML=''; ksel=null;
+  kidsModes().forEach((m,i)=>{ const b=document.createElement('button'); b.className='kb'; b.dataset.m=m; b.style.background=KCOL[i%6]; b.style.animationDelay=(-i*.4)+'s';
+    const cv2=document.createElement('canvas'); cv2.width=cv2.height=220; const x=cv2.getContext('2d'), save=c; c=x; try{ x.scale(2.2,2.2); x.translate(50,50); ell(0,0,46,46,'rgba(255,255,255,.65)'); ICON[m]&&ICON[m](); }catch(e){} c=save;
+    b.appendChild(cv2); const hint=document.createElement('i'); hint.textContent='もういちど タッチ！'; b.appendChild(hint);
+    b.addEventListener('click',()=>{ initAudio(); const now=performance.now();
+      if(ksel===m&&now-kselT<4000){ startMode(m); return; }
+      ksel=m; kselT=now; g.querySelectorAll('.kb').forEach(k=>k.classList.toggle('sel',k===b));
+      SFX.pop(); const nm=KIDN[m]; if(S.talk&&window.speechSynthesis) say(nm); else sparkle(0); });
+    g.appendChild(b); }); }
+// long-press button to the adult screen
+(()=>{ const btn=$('#kAdult'); let t0=0, id=0, on=false;
+  const tick=()=>{ if(!on) return; const p=Math.min(1,(performance.now()-t0)/1200); btn.style.setProperty('--p',p); if(p>=1){ stop(); renderRec(); renderNight(); show('home'); $('#home').scrollTop=0; } else id=requestAnimationFrame(tick); };
+  const stop=()=>{ on=false; cancelAnimationFrame(id); btn.style.setProperty('--p',0); };
+  const start=e=>{ e.preventDefault(); on=true; t0=performance.now(); tick(); };
+  btn.addEventListener('touchstart',start,{passive:false}); btn.addEventListener('mousedown',start);
+  ['touchend','touchcancel','mouseup','mouseleave'].forEach(n=>btn.addEventListener(n,stop)); btn.addEventListener('contextmenu',e=>e.preventDefault()); })();
+$('#toKids').addEventListener('click',()=>{ renderKids(); show('kids'); });
+
+vLoadAll(); updStk(); buildIcons(); renderRec(); renderNight(); if(S.kidsHome){ renderKids(); show('kids'); } splash(); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ buildIcons(); if($('#kids').classList.contains('on')) renderKids(); });
 /* ================= AUTO UPDATE (GitHub Pages etc.) ================= */
-const APP_VERSION='20261107225716';
+const APP_VERSION='20261107231336';
 async function checkUpdate(){
   if(!/^https?:$/.test(location.protocol)||location.hostname.endsWith('claude.ai')) return;
   try{ const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'}); if(!r.ok) return; const j=await r.json();

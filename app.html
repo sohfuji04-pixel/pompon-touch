@@ -16,8 +16,28 @@ html,body{margin:0;height:100%;overflow:hidden;background:var(--cream);font-fami
   background:radial-gradient(circle at 15% 0%,#ffe1ec 0,transparent 45%),radial-gradient(circle at 100% 30%,#dff3ff 0,transparent 45%),var(--cream)}
 .reload{position:absolute;right:calc(env(safe-area-inset-right) + 14px);top:calc(env(safe-area-inset-top) + 16px);display:flex;align-items:center;gap:5px;
   border:none;background:#fff;color:#ff7aa2;font:inherit;font-weight:800;font-size:13px;padding:8px 12px;border-radius:18px;box-shadow:0 3px 0 #ffd6e3,0 6px 14px rgba(120,80,100,.12)}
+.gear{position:absolute;right:calc(env(safe-area-inset-right) + 122px);top:calc(env(safe-area-inset-top) + 16px);width:38px;height:36px;border:none;border-radius:18px;background:#fff;display:grid;place-items:center;box-shadow:0 3px 0 #ffd6e3,0 6px 14px rgba(120,80,100,.12)}
+.gear svg{width:22px;height:22px}
+#settings{overflow-y:auto;padding:calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 30px);background:linear-gradient(180deg,#fff3f8,#f2f0ff)}
+#settings h2{margin:0;font-size:21px;font-weight:800;color:#ff7aa2}
+.sbox{background:#fff;border-radius:22px;padding:14px 16px;margin-top:14px;box-shadow:0 4px 14px rgba(120,80,100,.08)}
+.sbox h4{margin:0 0 4px;font-size:15px}.sbox p{margin:0 0 10px;font-size:12px;opacity:.7;line-height:1.5}
+.seg{display:flex;gap:6px}.seg button{flex:1;border:none;background:#f4eef6;color:#6b5a76;font:inherit;font-weight:800;border-radius:14px;padding:10px 0;font-size:13px}
+.seg button.on{background:#ff8fb3;color:#fff}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;font-size:14px;font-weight:800}
+.sw input{appearance:none;-webkit-appearance:none;width:50px;height:30px;border-radius:15px;background:#e5dde9;position:relative;transition:.2s;flex:none}
+.sw input::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.2s}
+.sw input:checked{background:#ff8fb3}.sw input:checked::after{left:23px}
+.mgrid{display:grid;grid-template-columns:1fr;gap:2px}
+.mgrid .sw{font-size:13px}
+.sbtn{width:100%;border:none;border-radius:18px;padding:13px;font:inherit;font-weight:800;font-size:14px;margin-top:10px;background:#f4eef6;color:#6b5a76}
+#settings input[type=range]{accent-color:#ff8fb3;margin:0}
+#endcard{position:fixed;inset:0;z-index:20;display:none;place-items:center;background:rgba(255,248,239,.96);text-align:center}
+#endcard.on{display:grid}#endcard b{display:block;font-size:26px;color:#ff7aa2;margin:8px 0 4px}#endcard small{font-size:14px;opacity:.75}
+#endcard button{margin-top:22px;border:none;background:#ff8fb3;color:#fff;font:inherit;font-weight:800;font-size:16px;border-radius:20px;padding:12px 30px}
 .reload svg{width:18px;height:18px}.reload.spin svg{animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
-.logo{padding-right:84px;display:flex;align-items:center;gap:12px;margin:4px 4px 6px}
+.logo svg{flex:none}
+.logo{margin-top:40px !important;display:flex;align-items:center;gap:12px;margin:4px 4px 6px}
 .logo h1{font-size:25px;white-space:nowrap;margin:0;font-weight:800;letter-spacing:.02em;color:#ff7aa2;text-shadow:0 3px 0 #ffd6e3}
 .sub{margin:0 6px 18px;font-size:14px;opacity:.75}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -94,6 +114,7 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
 <body>
 
 <div id="home" class="screen on">
+  <button class="gear" id="gearBtn" aria-label="せってい"><svg viewBox="0 0 24 24"><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(0 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(45 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(90 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(135 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(180 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(225 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(270 12 12)"/><rect x="10.2" y="1.5" width="3.6" height="5" rx="1.2" fill="#ff7aa2" transform="rotate(315 12 12)"/><circle cx="12" cy="12" r="7.2" fill="#ff7aa2"/><circle cx="12" cy="12" r="3" fill="#fff"/></svg></button>
   <button class="reload" id="reloadBtn"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66" stroke="#ff7aa2" stroke-width="2.8" fill="none" stroke-linecap="round"/><path d="M20 4v5h-5" stroke="#ff7aa2" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>こうしん</button>
   <div class="logo">
     <svg width="56" height="56" viewBox="0 0 100 100"><circle cx="50" cy="56" r="38" fill="#ffe169" stroke="#f2c43d" stroke-width="3"/><ellipse cx="44" cy="17" rx="6" ry="10" fill="#ffe169" transform="rotate(-20 44 17)"/><ellipse cx="55" cy="16" rx="5" ry="9" fill="#ffe169" transform="rotate(15 55 16)"/><ellipse cx="36" cy="52" rx="4.5" ry="6" fill="#3a2a35"/><ellipse cx="64" cy="52" rx="4.5" ry="6" fill="#3a2a35"/><circle cx="34.5" cy="49.5" r="1.8" fill="#fff"/><circle cx="62.5" cy="49.5" r="1.8" fill="#fff"/><ellipse cx="27" cy="64" rx="7" ry="4.5" fill="#ff9db8" opacity=".6"/><ellipse cx="73" cy="64" rx="7" ry="4.5" fill="#ff9db8" opacity=".6"/><path d="M43 61 L50 67 L57 61 L50 57Z" fill="#ff9a3c"/></svg>
@@ -179,6 +200,26 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
   <div class="stopbar"><button class="stopall" id="stopAll">■ おとを とめる</button></div>
 </div>
 
+<div id="settings" class="screen">
+  <div class="top"><button class="back" id="setBack" style="background:#fff;color:#ff7aa2;box-shadow:0 3px 0 #ffd6e3">‹ もどる</button><h2>せってい</h2></div>
+  <div class="sbox"><h4>🔊 おとの大きさ</h4><p>すべての遊びの音量です（ねんねの音は画面内でも調整できます）</p><input type="range" id="sVol" min="0" max="100" style="width:100%"></div>
+  <div class="sbox"><h4>⏰ あそびタイマー</h4><p>時間がくると「おしまい」画面になってホームにもどります</p>
+    <div class="seg" id="sLimit"><button data-v="0">なし</button><button data-v="5">5分</button><button data-v="10">10分</button><button data-v="15">15分</button></div></div>
+  <div class="sbox"><h4>🐢 うごきの速さ</h4><p>動物やボールの動き。ねこモードも含めて全体に効きます</p>
+    <div class="seg" id="sSpeed"><button data-v="0.6">ゆっくり</button><button data-v="1">ふつう</button></div></div>
+  <div class="sbox"><h4>🏠 あそびの終わり方</h4><p>左上のおうちボタンを長押しする時間</p>
+    <div class="seg" id="sHold"><button data-v="600">みじかい</button><button data-v="900">ふつう</button><button data-v="1600">ながい</button></div>
+    <label class="sw" style="margin-top:8px">タップで「もどる」ボタンを出す<input type="checkbox" id="sTap"></label></div>
+  <div class="sbox"><h4>👀 みやすさ</h4>
+    <label class="sw">画面をすこし暗くする（夜・新生児向け）<input type="checkbox" id="sDim"></label>
+    <label class="sw">タッチでブルッとふるえる（Android）<input type="checkbox" id="sVib"></label></div>
+  <div class="sbox"><h4>🧸 ホームに出すあそび</h4><p>オフにしたあそびはホームに表示されません</p><div class="mgrid" id="sModes"></div></div>
+  <button class="sbtn" id="sReset">せっていを はじめにもどす</button>
+</div>
+<div id="endcard"><div>
+  <svg width="140" height="120" viewBox="0 0 100 86"><circle cx="50" cy="48" r="34" fill="#ffe169" stroke="#f2c43d" stroke-width="3"/><ellipse cx="44" cy="12" rx="5" ry="9" fill="#ffe169" transform="rotate(-20 44 12)"/><path d="M32 46 q5 5 10 0 M58 46 q5 5 10 0" stroke="#3a2a35" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="27" cy="58" rx="6" ry="4" fill="#ff9db8" opacity=".6"/><ellipse cx="73" cy="58" rx="6" ry="4" fill="#ff9db8" opacity=".6"/><path d="M44 56 L50 61 L56 56 L50 52Z" fill="#ff9a3c"/><text x="78" y="20" font-size="14" fill="#a08ab8" font-weight="800">zz</text></svg>
+  <b>おしまい！</b><small>また あそぼうね</small><br><button id="endClose">ホームへ</button></div></div>
+
 <canvas id="cv" class="screen"></canvas>
 <div id="exit"><svg viewBox="0 0 24 24"><path d="M3 11 L12 3 L21 11 V21 H14 V15 H10 V21 H3Z" fill="#ff7aa2"/></svg></div>
 <div id="hint">長押し or タップ→「もどる」</div>
@@ -194,7 +235,7 @@ let AC,master,noiseBuf,brownBuf;
 function initAudio(){
   if(AC){ if(AC.state==='suspended') AC.resume(); return; }
   AC=new (window.AudioContext||window.webkitAudioContext)();
-  master=AC.createGain(); master.gain.value=.8;
+  master=AC.createGain(); master.gain.value=(typeof S!=='undefined'?S.vol:80)/100;
   const comp=AC.createDynamicsCompressor(); master.connect(comp); comp.connect(AC.destination);
   const len=AC.sampleRate*2;
   noiseBuf=AC.createBuffer(1,len,AC.sampleRate); const d=noiseBuf.getChannelData(0);
@@ -784,14 +825,18 @@ const BATH={
 /* ================= MODE CONTROL ================= */
 const MODES={touch:TOUCH,contrast:CONTRAST,cat:CAT,dog:DOG,poop:POOP,peek:PEEK,piano:PIANO,phone:PHONE,draw:DRAW,balloon:BALLOON,bath:BATH};
 let mode=null, raf=0, lastTs=0;
-function frame(ts){ const m=MODES[mode]; if(!m) return; const dt=Math.min(.05,Math.max(0,(ts-lastTs)/1000)); lastTs=ts; m.update(dt); updTexts(dt); m.draw(); drawTexts(); raf=requestAnimationFrame(frame); }
+function frame(ts){ const m=MODES[mode]; if(!m) return; const dt=Math.min(.05,Math.max(0,(ts-lastTs)/1000))*S.speed; lastTs=ts;
+  if(playEnd&&Date.now()>playEnd){ playEnd=0; endPlay(); return; } m.update(dt); updTexts(dt); m.draw(); drawTexts(); raf=requestAnimationFrame(frame); }
 function show(id){ document.querySelectorAll('.screen').forEach(e=>e.classList.toggle('on',e.id===id)); }
+let playEnd=0;
+function endPlay(){ goHome(); $('#endcard').classList.add('on'); try{ SFX.bye(); }catch(e){} }
 function startMode(id){
   initAudio();
   if(id==='sleep'){ show('sleep'); return; }
   try{ const el=document.documentElement; (el.requestFullscreen||el.webkitRequestFullscreen)?.call(el)?.catch?.(()=>{}); }catch(e){}
   mode=id; parts=[]; texts=[]; resize(); show('cv'); MODES[id].init();
   $('#exit').style.display='grid'; const h=$('#hint'); h.style.display='block'; h.style.opacity=1; setTimeout(()=>h.style.opacity=0,3200);
+  playEnd=S.limit?Date.now()+S.limit*60000:0; cv.style.filter=S.dim?'brightness(.75) saturate(.9)':'';
   lastTs=performance.now(); cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
 }
 function goHome(){ mode=null; cancelAnimationFrame(raf); $('#exit').style.display='none'; $('#hint').style.display='none';
@@ -799,7 +844,7 @@ function goHome(){ mode=null; cancelAnimationFrame(raf); $('#exit').style.displa
 document.querySelectorAll('.card').forEach(b=>b.addEventListener('click',()=>startMode(b.dataset.mode)));
 
 const down=new Set();
-cv.addEventListener('pointerdown',e=>{ e.preventDefault(); if(!mode) return; initAudio(); down.add(e.pointerId); MODES[mode].tap(e.clientX,e.clientY,e.pointerId); });
+cv.addEventListener('pointerdown',e=>{ e.preventDefault(); if(!mode) return; initAudio(); down.add(e.pointerId); if(S.vib&&navigator.vibrate){ try{ navigator.vibrate(12); }catch(_){} } MODES[mode].tap(e.clientX,e.clientY,e.pointerId); });
 cv.addEventListener('pointermove',e=>{ if(mode&&down.has(e.pointerId)) MODES[mode].move(e.clientX,e.clientY,e.pointerId); });
 ['pointerup','pointercancel','pointerleave'].forEach(n=>cv.addEventListener(n,e=>{ if(!down.has(e.pointerId)) return; down.delete(e.pointerId); if(mode&&MODES[mode].up) MODES[mode].up(e.pointerId); }));
 cv.addEventListener('contextmenu',e=>e.preventDefault());
@@ -808,12 +853,12 @@ document.addEventListener('gesturestart',e=>e.preventDefault());
 
 // long-press exit (parent lock)
 (()=>{ const ex=$('#exit'), cf=$('#confirm'); let t0=0, id=0, holding=false, cfT=0;
-  const tick=()=>{ if(!holding) return; const p=Math.min(1,(performance.now()-t0)/900); ex.style.setProperty('--p',p); if(p>=1){ stop(); home(); } else id=requestAnimationFrame(tick); };
+  const tick=()=>{ if(!holding) return; const p=Math.min(1,(performance.now()-t0)/S.hold); ex.style.setProperty('--p',p); if(p>=1){ stop(); home(); } else id=requestAnimationFrame(tick); };
   const stop=()=>{ holding=false; cancelAnimationFrame(id); ex.style.setProperty('--p',0); };
   const home=()=>{ cf.classList.remove('on'); clearTimeout(cfT); goHome(); };
   const start=e=>{ e.preventDefault(); e.stopPropagation(); if(holding) return; holding=true; t0=performance.now(); tick();
     // short tap: show a small "もどる" button next to it for 3s
-    $('#hint').style.display='none'; cf.classList.add('on'); clearTimeout(cfT); cfT=setTimeout(()=>cf.classList.remove('on'),3000); };
+    $('#hint').style.display='none'; if(!S.tapExit) return; cf.classList.add('on'); clearTimeout(cfT); cfT=setTimeout(()=>cf.classList.remove('on'),3000); };
   ex.addEventListener('touchstart',start,{passive:false});
   ex.addEventListener('mousedown',start);
   ['touchend','touchcancel','mouseup','mouseleave'].forEach(n=>ex.addEventListener(n,stop));
@@ -909,8 +954,34 @@ setInterval(()=>{ const r=$('#remain');
 
 $('#reloadBtn').addEventListener('click',()=>{ $('#reloadBtn').classList.add('spin');
   try{ const u=new URL(location.href); u.searchParams.set('v',Date.now()); if(/^https?:$/.test(location.protocol)&&!location.hostname.endsWith('claude.ai')) location.replace(u.toString()); else location.reload(); }catch(e){ location.reload(); } });
+
+/* ================= SETTINGS ================= */
+const DEF={vol:80,limit:0,speed:1,hold:900,tapExit:true,dim:false,vib:false,hidden:[]};
+let S=Object.assign({},DEF);
+try{ Object.assign(S,JSON.parse(localStorage.getItem('pompon-settings')||'{}')); }catch(e){}
+function saveS(){ try{ localStorage.setItem('pompon-settings',JSON.stringify(S)); }catch(e){} }
+const MODE_NAMES=[...document.querySelectorAll('#home .card')].map(b=>[b.dataset.mode,b.querySelector('b').textContent]);
+function applyS(){
+  if(master) master.gain.setTargetAtTime(S.vol/100,AC.currentTime,.05);
+  document.querySelectorAll('#home .card').forEach(b=>b.style.display=S.hidden.includes(b.dataset.mode)?'none':'');
+  $('#sVol').value=S.vol; $('#sTap').checked=S.tapExit; $('#sDim').checked=S.dim; $('#sVib').checked=S.vib;
+  for(const [id,key] of [['sLimit','limit'],['sSpeed','speed'],['sHold','hold']]) document.querySelectorAll('#'+id+' button').forEach(b=>b.classList.toggle('on',+b.dataset.v===S[key]));
+  document.querySelectorAll('#sModes input').forEach(i=>i.checked=!S.hidden.includes(i.dataset.m));
+  $('#hint').textContent=S.tapExit?'長押し or タップ→「もどる」':'長押しで おうちへ';
+}
+$('#sModes').innerHTML=MODE_NAMES.map(([m,n])=>`<label class="sw">${n}<input type="checkbox" data-m="${m}"></label>`).join('');
+for(const [id,key] of [['sLimit','limit'],['sSpeed','speed'],['sHold','hold']]) document.querySelectorAll('#'+id+' button').forEach(b=>b.addEventListener('click',()=>{ S[key]=+b.dataset.v; saveS(); applyS(); }));
+$('#sVol').addEventListener('input',()=>{ S.vol=+$('#sVol').value; saveS(); applyS(); });
+$('#sVol').addEventListener('change',()=>{ initAudio(); SFX.tink(); });
+for(const [id,key] of [['sTap','tapExit'],['sDim','dim'],['sVib','vib']]) $('#'+id).addEventListener('change',()=>{ S[key]=$('#'+id).checked; saveS(); applyS(); });
+$('#sModes').addEventListener('change',e=>{ const m=e.target.dataset.m; if(!m) return; S.hidden=S.hidden.filter(x=>x!==m); if(!e.target.checked) S.hidden.push(m); saveS(); applyS(); });
+$('#sReset').addEventListener('click',()=>{ S=Object.assign({},DEF,{hidden:[]}); saveS(); applyS(); });
+$('#gearBtn').addEventListener('click',()=>{ applyS(); show('settings'); $('#settings').scrollTop=0; });
+$('#setBack').addEventListener('click',()=>show('home'));
+$('#endClose').addEventListener('click',()=>$('#endcard').classList.remove('on'));
+applyS();
 /* ================= AUTO UPDATE (GitHub Pages etc.) ================= */
-const APP_VERSION='20261107212102';
+const APP_VERSION='20261107212348';
 async function checkUpdate(){
   if(!/^https?:$/.test(location.protocol)||location.hostname.endsWith('claude.ai')) return;
   try{ const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'}); if(!r.ok) return; const j=await r.json();

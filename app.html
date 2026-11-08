@@ -136,6 +136,12 @@ html,body{margin:0;height:100%;overflow:hidden;background:var(--cream);font-fami
 .man h3{margin:0 0 8px;font-size:16px;color:#5a4a6a}.man p,.man li{font-size:13px;line-height:1.75}.man ul{margin:0;padding-left:1.2em}.man li{margin:4px 0}.man b{color:#ff6f9c}.man small{opacity:.75}
 .mrow{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px dashed #f0e3ea}.mrow:last-child{border:none}
 .mrow canvas{width:46px;height:46px;flex:none}.mrow div{font-size:12.5px;line-height:1.5}.mrow div b{display:block;font-size:14px;color:#5a4a6a}
+#recAll{position:fixed;inset:0;z-index:30;display:none;place-items:center;background:rgba(60,40,80,.45)}#recAll.on{display:grid}
+.rwbox{width:min(92vw,380px);background:#fff;border-radius:28px;padding:20px 18px;text-align:center;box-shadow:0 20px 40px rgba(0,0,0,.2)}
+#rwNum{font-size:12px;font-weight:800;opacity:.6}#rwWord{font-size:34px;font-weight:800;color:#ff6f9c;margin:8px 0 6px}#rwHas{font-size:12.5px;font-weight:800;min-height:1.4em;color:#8a6a96}
+#rwRec{width:100%;border:none;border-radius:20px;padding:16px;margin:12px 0 10px;font:inherit;font-weight:800;font-size:17px;color:#fff;background:#ff6f9c;box-shadow:0 5px 0 #d9507c}#rwRec.rec{background:#e0405f;animation:kbsel .5s infinite alternate}
+.rwrow{display:flex;gap:6px}.rwrow button{flex:1;border:none;border-radius:14px;padding:10px 0;font:inherit;font-weight:800;font-size:13px;background:#f4eef6;color:#6b5a76}.rwrow button:disabled{opacity:.35}
+.rwbox p{font-size:11.5px;opacity:.7;line-height:1.6;margin:12px 0 8px}#rwClose{border:none;background:none;font:inherit;font-weight:800;color:#a08ab0;font-size:14px;padding:6px 20px}
 .c10{background:linear-gradient(160deg,#fffaf0,#ffe9c9)}
 
 .note{margin:22px 4px 0;background:#fff;border-radius:20px;padding:14px 16px;font-size:12.5px;line-height:1.7;box-shadow:0 4px 14px rgba(120,80,100,.08)}
@@ -330,7 +336,14 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
     <label class="sw">タッチでブルッとふるえる（Android）<input type="checkbox" id="sVib"></label>
     <label class="sw">夜は自動でやさしい画面・ゆっくりに<input type="checkbox" id="sNight"></label>
     <label class="sw">きせつの かざり（あき・ゆき・さくら など）<input type="checkbox" id="sSeason"></label></div>
-  <div class="sbox"><h4>🗣 ことば</h4><label class="sw">タッチしたものの名前を しゃべる<input type="checkbox" id="sTalk"></label><p>「りんご！」「くるま！」など。スマホの読み上げ音声を使います</p></div>
+  <div class="sbox"><h4>🗣 ことば（名前を しゃべる声）</h4>
+    <label class="sw">タッチしたものの 名前を しゃべる<input type="checkbox" id="sTalk"></label>
+    <p>おすすめは、お子さんや パパ・ママの声を ろくおんする方法です。「ことばを ろくおん」から 1つずつ かんたんに とれます。</p>
+    <button class="sbtn" id="rwOpenBtn" style="background:#ff8fb3;color:#fff">🎤 ことばを ろくおん する</button><p id="rwStat" style="margin-top:8px;font-weight:800;opacity:1"></p>
+    <label class="sw">ろくおんを こどもっぽい 高い声にする<input type="checkbox" id="sKidVoice"></label>
+    <p style="margin-top:8px;font-weight:800;opacity:1">ろくおんしていない ことばは…</p>
+    <div class="seg" id="sVoiceMode"><button data-v="rec">しゃべらない</button><button data-v="tts">きかいの声で しゃべる</button></div></div>
+  <div class="sbox"><h4>🎵 ホームの BGM</h4><label class="sw">ホーム画面で 音楽を ながす<input type="checkbox" id="sBgm"></label><input type="range" id="sBgmVol" min="0" max="100" style="width:100%"></div>
   <div class="sbox"><h4>🧸 ホームに出すあそび</h4><p>オフにしたあそびはホームに表示されません</p><div class="mgrid" id="sModes"></div></div>
   <div class="sbox"><h4>👶 こどもホーム</h4><p>アプリを ひらくと出る、こども用の 画面です。絵だけの 大きなボタンが 6こ ならび、タッチすると 名前を言って はじまります</p>
     <label class="sw">ひらいたら こどもホームを出す<input type="checkbox" id="sKids"></label>
@@ -365,14 +378,14 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
     <section><h3>🌸 シールと きろく</h3><p>あそびを さいごまで できたり、たくさん タッチすると「できたね！」と シールが もらえます。ホームの「シール ○まい」から シールちょうを 見られます。「せってい → あそびの きろく」で その日 あそんだ時間が わかります。</p></section>
     <section><h3>⚙️ せってい</h3>
       <ul><li><b>おとの大きさ・あそびタイマー・うごきの速さ</b>：お子さまに あわせて 調整できます。タイマーを つけると 時間で「おしまい」に なります。</li>
-      <li><b>🗣 ことば</b>：タッチしたものの 名前を しゃべります。</li>
+      <li><b>🗣 ことば</b>：「ことばを ろくおん」で、お子さんや パパ・ママの声を 1つずつ ろくおんすると、タッチしたときに その声で 名前を いいます（こどもっぽい高い声にも できます）。</li><li><b>🎵 ホームのBGM</b>：ホーム画面の 音楽の オン・オフと 音量。</li>
       <li><b>🎤 おうちの人の声</b>：「ばあ！」「おいしいね」「すごいね！」を パパ・ママの声で 録音できます（スマホの中だけに保存）。</li>
       <li><b>ホームに出すあそび</b>：オフにした あそびは 大人用の画面に 出ません。</li></ul></section>
     <section><h3>📱 ホーム画面に 追加する</h3><p>iPhone：Safariで開いて 共有ボタン →「ホーム画面に追加」。Android：Chromeの メニュー →「ホーム画面に追加」。アプリのように 全画面で ひらけます。一度 ひらけば 電波のない場所でも あそべます。</p></section>
     <section><h3>❓ こまったときは</h3>
       <ul><li><b>音が出ない</b>：iPhoneの 消音スイッチ（マナーモード）を オフにして、音量を上げてください。最初の1回は 画面に タッチすると 音が出るように なります。</li>
       <li><b>新しい あそびが 出てこない</b>：大人用の画面の右上「こうしん」を 押してください。</li>
-      <li><b>名前を しゃべらない</b>：スマホの 読み上げ音声を つかっています。消音スイッチや「せってい → ことば」を たしかめてください。</li>
+      <li><b>名前を しゃべらない</b>：ろくおんした ことばだけ しゃべります。「せってい → ことば → ことばを ろくおん」で 声を いれてください。</li>
       <li><b>画面が 拡大してしまう</b>：もとに もどすには 2本指で ちぢめてください。</li></ul></section>
   </div>
 </div>
@@ -382,6 +395,12 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
   <p class="bnote">あそびを さいごまで できたり、たくさん タッチすると シールが もらえるよ</p>
 </div>
 <div id="splash"><canvas id="splashCv" width="280" height="260"></canvas><b>ぽんぽんタッチ</b><small>タッチして あそぼう！</small></div>
+<div id="recAll"><div class="rwbox">
+  <div id="rwNum"></div><div id="rwWord"></div><div id="rwHas"></div>
+  <button id="rwRec">● ろくおん</button>
+  <div class="rwrow"><button id="rwPrev">‹ まえ</button><button id="rwPlay">▶ きく</button><button id="rwDel">✕ けす</button><button id="rwNext">つぎ ›</button></div>
+  <p>ボタンを おして 2びょう いないに ことばを いってください。お子さんの声でも、パパ・ママの声でも OK。ろくおんは このスマホの中だけに 保存されます。</p>
+  <button id="rwClose">おわる</button></div></div>
 <div id="endcard"><div>
   <svg width="140" height="120" viewBox="0 0 100 86"><circle cx="50" cy="48" r="34" fill="#ffe169" stroke="#f2c43d" stroke-width="3"/><ellipse cx="44" cy="12" rx="5" ry="9" fill="#ffe169" transform="rotate(-20 44 12)"/><path d="M32 46 q5 5 10 0 M58 46 q5 5 10 0" stroke="#3a2a35" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="27" cy="58" rx="6" ry="4" fill="#ff9db8" opacity=".6"/><ellipse cx="73" cy="58" rx="6" ry="4" fill="#ff9db8" opacity=".6"/><path d="M44 56 L50 61 L56 56 L50 52Z" fill="#ff9a3c"/><text x="78" y="20" font-size="14" fill="#a08ab8" font-weight="800">zz</text></svg>
   <b>おしまい！</b><small>また あそぼうね</small><br><button id="endClose">ホームへ</button></div></div>
@@ -1397,7 +1416,7 @@ async function vLoadAll(){ const db=await vOpen(); if(!db) return; const tx=db.t
   req.onsuccess=async()=>{ const cur=req.result; if(cur){ try{ VOraw[cur.key]=await cur.value.arrayBuffer(); }catch(e){} cur.continue(); } else vUI(); }; }
 function vSave(key,blob){ if(!vdb) return; try{ vdb.transaction('voice','readwrite').objectStore('voice').put(blob,key); }catch(e){} }
 function vDel(key){ delete VO[key]; delete VOraw[key]; if(vdb) try{ vdb.transaction('voice','readwrite').objectStore('voice').delete(key); }catch(e){} vUI(); }
-function playVoice(key){ if(!AC) return false; if(VO[key]){ const s=AC.createBufferSource(); s.buffer=VO[key]; const g=AC.createGain(); g.gain.value=1.4; s.connect(g); g.connect(master); s.start(); return true; }
+function playVoice(key){ if(!AC) return false; if(VO[key]){ const s=AC.createBufferSource(); s.buffer=VO[key]; if(S.kidVoice) s.playbackRate.value=1.28; const g=AC.createGain(); g.gain.value=1.4; s.connect(g); g.connect(master); s.start(); return true; }
   if(VOraw[key]){ AC.decodeAudioData(VOraw[key].slice(0)).then(b=>{ VO[key]=b; playVoice(key); }).catch(()=>{}); return true; } return false; }
 let rec=null;
 async function vRecord(key,btn){ initAudio(); if(rec){ rec.stop(); return; }
@@ -1465,8 +1484,6 @@ const TOYN={block0:'つみき',block1:'つみき',block2:'つみき',ball:'ボ�
 let lastSay=0, jaVoice=null;
 function pickVoice(){ try{ const v=speechSynthesis.getVoices().filter(v=>/ja/i.test(v.lang)); jaVoice=v.find(x=>/kyoko|o-ren|female|女性|nanami/i.test(x.name))||v[0]||null; }catch(e){} }
 if(window.speechSynthesis){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
-function say(t){ if(!t||!S.talk||!window.speechSynthesis) return; const now=performance.now(); if(now-lastSay<500) return; lastSay=now;
-  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang='ja-JP'; if(jaVoice) u.voice=jaVoice; u.rate=.95; u.pitch=1.35; u.volume=Math.min(1,S.vol/70); speechSynthesis.speak(u); }catch(e){} }
 
 /* ================= SEASONS ================= */
 function seasonKind(){ const d=new Date(), m=d.getMonth()+1, day=d.getDate();
@@ -1523,6 +1540,54 @@ function splash(){ let seen=false; try{ seen=sessionStorage.getItem('pompon-spla
   const el=$('#splash'); if(seen){ el.remove(); return; }
   const cv2=$('#splashCv'), x=cv2.getContext('2d'), save=c; c=x; try{ x.scale(2,2); x.translate(70,74); drawAnimal('hiyoko',54,1,.5); }catch(e){} c=save;
   const close=()=>{ el.classList.add('out'); setTimeout(()=>el.remove(),500); }; el.addEventListener('click',close); setTimeout(close,1500); }
+/* ================= VOICE: recorded words first, robot voice only if chosen ================= */
+function wordList(){ const set=new Set(); [KIDN,NAMES,FOODN,CARN,TOYN].forEach(o=>Object.values(o).forEach(v=>set.add(v)));
+  ['おいしいね','でんき つけた','でんき けした','おんがく','にじ','ばいばい にじ','きんぎょ','うんち','きんの うんち','おなら','ピッカピカ'].forEach(v=>set.add(v)); return [...set]; }
+function say(t){ if(!t||!S.talk) return; const now=performance.now(); if(now-lastSay<450) return;
+  const key='w:'+t; if(VOraw[key]||VO[key]){ lastSay=now; playVoice(key); return; }
+  if(S.voiceMode!=='tts'||!window.speechSynthesis) return; lastSay=now;
+  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang='ja-JP'; if(jaVoice) u.voice=jaVoice; u.rate=1.05; u.pitch=1.9; u.volume=Math.min(1,S.vol/70); speechSynthesis.speak(u); }catch(e){} }
+// guided recorder: record every word one by one
+let RW={list:[],i:0,rec:null};
+async function recWord(key,onState){ initAudio(); if(RW.rec){ RW.rec.stop(); return; }
+  try{ const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}}); const mr=new MediaRecorder(stream), chunks=[]; RW.rec=mr; onState('rec');
+    mr.ondataavailable=e=>chunks.push(e.data);
+    mr.onstop=async()=>{ stream.getTracks().forEach(t=>t.stop()); RW.rec=null; const blob=new Blob(chunks,{type:mr.mimeType||'audio/webm'}); VOraw[key]=await blob.arrayBuffer(); delete VO[key]; vSave(key,blob); onState('done'); playVoice(key); };
+    mr.start(); setTimeout(()=>{ if(mr.state==='recording') mr.stop(); },2200);
+  }catch(e){ RW.rec=null; onState('err'); } }
+function rwShow(){ const w=RW.list[RW.i], key='w:'+w, has=!!(VOraw[key]||VO[key]);
+  $('#rwWord').textContent=w; $('#rwNum').textContent=`${RW.i+1} / ${RW.list.length}`; $('#rwHas').textContent=has?'✓ ろくおんずみ（▶で きけます）':'まだ ろくおん していません';
+  $('#rwPlay').disabled=!has; $('#rwRec').textContent='● ろくおん（2びょう）'; $('#rwRec').classList.remove('rec'); }
+function rwOpen(){ RW.list=wordList(); RW.i=Math.max(0,RW.list.findIndex(w=>!(VOraw['w:'+w]||VO['w:'+w]))); $('#recAll').classList.add('on'); rwShow(); }
+function rwCount(){ const L=wordList(); return [L.filter(w=>VOraw['w:'+w]||VO['w:'+w]).length,L.length]; }
+function rwStat(){ const [a,b]=rwCount(); const e=$('#rwStat'); if(e) e.textContent=`ろくおんした ことば：${a} / ${b}`; }
+
+/* ================= HOME BGM & SE ================= */
+const BGM={on:false,timer:0,next:0,step:0,g:null,
+  MEL:['E5',0,'G5',0,'A5','G5','E5',0,  'C5',0,'D5',0,'E5',0,0,0,  'A5',0,'G5',0,'E5',0,'C5',0,  'D5',0,0,0,0,0,0,0,
+       'E5',0,'G5',0,'A5','G5','E5',0,  'C6',0,'A5',0,'G5',0,0,0,  'A5','G5','E5',0,'D5',0,'E5',0,  'C5',0,0,0,0,0,0,0],
+  BASS:['C3','A2','F2','G2','C3','A2','F2','C3'],
+  F:{C3:130.81,A2:110,F2:87.31,G2:98,C5:523.25,D5:587.33,E5:659.25,G5:783.99,A5:880,C6:1046.5},
+  start(){ if(!S.bgm||this.on||!AC||AC.state!=='running') return; this.on=true; this.g=AC.createGain(); this.g.gain.value=0; this.g.connect(master);
+    this.g.gain.setTargetAtTime(S.bgmVol/100*.55,AC.currentTime,.6); this.next=AC.currentTime+.15; this.step=0; this.timer=setInterval(()=>this.sched(),90); },
+  stop(){ if(!this.on) return; this.on=false; clearInterval(this.timer); const g=this.g; try{ g.gain.setTargetAtTime(0,AC.currentTime,.15); }catch(e){} setTimeout(()=>{ try{ g.disconnect(); }catch(e){} },900); },
+  vol(){ if(this.on) this.g.gain.setTargetAtTime(S.bgmVol/100*.55,AC.currentTime,.1); },
+  sched(){ const e=60/100/2; while(this.next<AC.currentTime+.35){ this.note(this.step,this.next-AC.currentTime); this.next+=e; this.step=(this.step+1)%64; } },
+  note(i,at){ if(at<0) return; const d=this.g, m=this.MEL[i];
+    if(m){ const f=this.F[m]; tone({type:'sine',f:[f,f],dur:.9,vol:.12,atk:.004,dest:d,at}); tone({type:'sine',f:[f*4,f*4],dur:.25,vol:.02,atk:.003,dest:d,at}); }
+    if(i%8===0){ const b=this.F[this.BASS[(i/8)|0]]; tone({type:'triangle',f:[b,b],dur:.5,vol:.1,atk:.01,dest:d,at}); tone({type:'sine',f:[b*2,b*2],dur:.35,vol:.05,dest:d,at:at+.6}); }
+    if(i%8===4){ const b=this.F[this.BASS[(i/8)|0]]; tone({type:'triangle',f:[b*1.5,b*1.5],dur:.4,vol:.07,atk:.01,dest:d,at}); }
+    if(i%2===1) noiseBurst({dur:.03,vol:.012,ft:'highpass',freq:7000,dest:d,at}); }
+};
+const HOMEISH=['kids','home','settings','book','manual'];
+const _show=show; show=function(id){ _show(id); if(HOMEISH.includes(id)) BGM.start(); else BGM.stop(); };
+document.addEventListener('pointerdown',()=>{ const wasNew=!AC; initAudio(); const cur=document.querySelector('.screen.on'); if(cur&&HOMEISH.includes(cur.id)) setTimeout(()=>BGM.start(),wasNew?120:0); },true);
+Object.assign(SFX,{
+  kidTap(i){ const f=PENTA[(i*2)%8]; tone({type:'triangle',f:[f*.5,f],dur:.18,vol:.22}); tone({f:[f,f*1.5],dur:.22,vol:.1,at:.09}); sparkle(.15); },
+  go(){ [523,659,784,1046].forEach((f,i)=>tone({type:'triangle',f:[f,f],dur:.18,vol:.12,at:i*.06})); },
+  back(){ [784,659,523].forEach((f,i)=>tone({type:'triangle',f:[f,f*.98],dur:.16,vol:.1,at:i*.07})); },
+  ui(){ tone({f:[900,1300],dur:.07,vol:.1}); }
+});
 /* ================= MODE CONTROL ================= */
 const MODES={touch:TOUCH,contrast:CONTRAST,cat:CAT,dog:DOG,poop:POOP,peek:PEEK,piano:PIANO,phone:PHONE,draw:DRAW,balloon:BALLOON,bath:BATH,food:FOOD,fruit:FRUIT,car:CAR,brush:BRUSH,tidy:TIDY,switch:SWITCH,fish:FISH};
 let mode=null, raf=0, lastTs=0;
@@ -1531,7 +1596,7 @@ function frame(ts){ const m=MODES[mode]; if(!m) return; const rdt=Math.min(.05,M
 function show(id){ document.querySelectorAll('.screen').forEach(e=>e.classList.toggle('on',e.id===id)); }
 let playEnd=0, nightOn=false;
 function endPlay(){ goHome(); $('#endcard').classList.add('on'); try{ SFX.bye(); }catch(e){} }
-function startMode(id){
+function startMode(id){ try{ initAudio(); BGM.stop(); SFX.go(); }catch(e){}
   initAudio();
   if(id==='sleep'){ show('sleep'); return; }
   try{ const el=document.documentElement; (el.requestFullscreen||el.webkitRequestFullscreen)?.call(el)?.catch?.(()=>{}); }catch(e){}
@@ -1664,7 +1729,7 @@ var KIDN={touch:'どうぶつ',food:'もぐもぐ',fruit:'くだもの',car:'ぶ
 var KCOL=['#ffd0e0','#ffe3b3','#d6f0ff','#dff5cf','#e9ddff','#fff1b8'];
 var KDEF=['touch','food','car','balloon','peek','fish'];
 
-const DEF={vol:80,limit:0,speed:1,hold:900,tapExit:true,dim:false,vib:false,hidden:[],talk:true,season:true,nightAuto:true,kidsHome:true,kidsAuto:true,kidsModes:[]};
+const DEF={vol:80,limit:0,speed:1,hold:900,tapExit:true,dim:false,vib:false,hidden:[],talk:true,season:true,nightAuto:true,kidsHome:true,kidsAuto:true,kidsModes:[],voiceMode:'rec',kidVoice:true,bgm:true,bgmVol:60};
 let S=Object.assign({},DEF);
 try{ Object.assign(S,JSON.parse(localStorage.getItem('pompon-settings')||'{}')); }catch(e){}
 function saveS(){ try{ localStorage.setItem('pompon-settings',JSON.stringify(S)); }catch(e){} }
@@ -1672,7 +1737,7 @@ const MODE_NAMES=[...document.querySelectorAll('#home .card')].map(b=>[b.dataset
 function applyS(){
   if(master) master.gain.setTargetAtTime(S.vol/100,AC.currentTime,.05);
   document.querySelectorAll('#home .card').forEach(b=>b.style.display=S.hidden.includes(b.dataset.mode)?'none':'');
-  $('#sVol').value=S.vol; $('#sTap').checked=S.tapExit; $('#sDim').checked=S.dim; $('#sVib').checked=S.vib; $('#sTalk').checked=S.talk; $('#sKids').checked=S.kidsHome; renderKpick(); $('#sSeason').checked=S.season; $('#sNight').checked=S.nightAuto;
+  $('#sVol').value=S.vol; $('#sTap').checked=S.tapExit; $('#sDim').checked=S.dim; $('#sVib').checked=S.vib; $('#sTalk').checked=S.talk; $('#sKidVoice').checked=S.kidVoice; $('#sBgm').checked=S.bgm; $('#sBgmVol').value=S.bgmVol; document.querySelectorAll('#sVoiceMode button').forEach(b=>b.classList.toggle('on',b.dataset.v===S.voiceMode)); rwStat(); $('#sKids').checked=S.kidsHome; renderKpick(); $('#sSeason').checked=S.season; $('#sNight').checked=S.nightAuto;
   for(const [id,key] of [['sLimit','limit'],['sSpeed','speed'],['sHold','hold']]) document.querySelectorAll('#'+id+' button').forEach(b=>b.classList.toggle('on',+b.dataset.v===S[key]));
   document.querySelectorAll('#sModes input').forEach(i=>i.checked=!S.hidden.includes(i.dataset.m));
   $('#hint').textContent=S.tapExit?'長押し or タップ→「もどる」':'長押しで おうちへ';
@@ -1681,7 +1746,7 @@ $('#sModes').innerHTML=MODE_NAMES.map(([m,n])=>`<label class="sw">${n}<input typ
 for(const [id,key] of [['sLimit','limit'],['sSpeed','speed'],['sHold','hold']]) document.querySelectorAll('#'+id+' button').forEach(b=>b.addEventListener('click',()=>{ S[key]=+b.dataset.v; saveS(); applyS(); }));
 $('#sVol').addEventListener('input',()=>{ S.vol=+$('#sVol').value; saveS(); applyS(); });
 $('#sVol').addEventListener('change',()=>{ initAudio(); SFX.tink(); });
-for(const [id,key] of [['sTap','tapExit'],['sDim','dim'],['sVib','vib'],['sTalk','talk'],['sKids','kidsHome'],['sSeason','season'],['sNight','nightAuto']]) $('#'+id).addEventListener('change',()=>{ S[key]=$('#'+id).checked; saveS(); applyS(); });
+for(const [id,key] of [['sTap','tapExit'],['sDim','dim'],['sVib','vib'],['sTalk','talk'],['sKidVoice','kidVoice'],['sBgm','bgm'],['sKids','kidsHome'],['sSeason','season'],['sNight','nightAuto']]) $('#'+id).addEventListener('change',()=>{ S[key]=$('#'+id).checked; saveS(); applyS(); });
 $('#sModes').addEventListener('change',e=>{ const m=e.target.dataset.m; if(!m) return; S.hidden=S.hidden.filter(x=>x!==m); if(!e.target.checked) S.hidden.push(m); saveS(); applyS(); });
 function kIcon(m,size){ const cv2=document.createElement('canvas'); cv2.width=cv2.height=size*2; const x=cv2.getContext('2d'), save=c; c=x; try{ x.scale(size*2/100,size*2/100); x.translate(50,50); ell(0,0,46,46,'rgba(255,255,255,.75)'); ICON[m]&&ICON[m](); }catch(e){} c=save; return cv2; }
 function renderKpick(){ const prev=$('#kprev'); if(!prev) return;
@@ -1698,6 +1763,17 @@ $('#kpick').addEventListener('click',e=>{ const t=e.target.closest('.kt'); if(!t
   S.kidsModes=L; saveS(); renderKpick(); });
 document.querySelectorAll('#kMode button').forEach(b=>b.addEventListener('click',()=>{ S.kidsAuto=b.dataset.v==='auto'; if(!S.kidsAuto&&!(S.kidsModes||[]).length) S.kidsModes=kidsModesAuto(); saveS(); renderKpick(); }));
 $('#kClear').addEventListener('click',()=>{ S.kidsModes=[]; saveS(); renderKpick(); });
+document.querySelectorAll('#sVoiceMode button').forEach(b=>b.addEventListener('click',()=>{ S.voiceMode=b.dataset.v; saveS(); applyS(); if(S.voiceMode==='tts'){ initAudio(); say('くまさん'); } }));
+$('#sBgmVol').addEventListener('input',()=>{ S.bgmVol=+$('#sBgmVol').value; saveS(); BGM.vol(); });
+$('#sBgm').addEventListener('change',()=>{ setTimeout(()=>{ if(S.bgm) BGM.start(); else BGM.stop(); },0); });
+$('#rwOpenBtn').addEventListener('click',rwOpen);
+$('#rwRec').addEventListener('click',()=>{ const w=RW.list[RW.i]; recWord('w:'+w,st=>{ if(st==='rec'){ $('#rwRec').textContent='■ とめる'; $('#rwRec').classList.add('rec'); $('#rwHas').textContent='🔴 ろくおん中… 「'+w+'」と いってね'; BGM.stop(); }
+  else if(st==='done'){ rwShow(); rwStat(); } else { $('#rwHas').textContent='マイクが つかえませんでした。ブラウザの マイク許可を たしかめてください'; } }); });
+$('#rwPlay').addEventListener('click',()=>{ initAudio(); playVoice('w:'+RW.list[RW.i]); });
+$('#rwNext').addEventListener('click',()=>{ RW.i=(RW.i+1)%RW.list.length; rwShow(); });
+$('#rwPrev').addEventListener('click',()=>{ RW.i=(RW.i-1+RW.list.length)%RW.list.length; rwShow(); });
+$('#rwDel').addEventListener('click',()=>{ vDel('w:'+RW.list[RW.i]); rwShow(); rwStat(); });
+$('#rwClose').addEventListener('click',()=>{ $('#recAll').classList.remove('on'); rwStat(); BGM.start(); });
 $('#sReset').addEventListener('click',()=>{ S=Object.assign({},DEF,{hidden:[]}); saveS(); applyS(); });
 $('#gearBtn').addEventListener('click',()=>{ applyS(); renderLog(); show('settings'); $('#settings').scrollTop=0; });
 $('#setBack').addEventListener('click',()=>{ renderRec(); show('home'); });
@@ -1721,7 +1797,7 @@ function renderKids(){ const g=$('#kgrid'); g.innerHTML=''; ksel=null;
     const cv2=document.createElement('canvas'); cv2.width=cv2.height=220; const x=cv2.getContext('2d'), save=c; c=x; try{ x.scale(2.2,2.2); x.translate(50,50); ell(0,0,46,46,'rgba(255,255,255,.65)'); ICON[m]&&ICON[m](); }catch(e){} c=save;
     b.appendChild(cv2);
     b.addEventListener('click',()=>{ initAudio(); const now=performance.now();
-      if(ksel) return; ksel=m; b.classList.add('sel'); SFX.pop(); if(S.talk&&window.speechSynthesis) say(KIDN[m]); else sparkle(0);
+      if(ksel) return; ksel=m; b.classList.add('sel'); SFX.kidTap([...g.children].indexOf(b)); if(S.talk&&window.speechSynthesis) say(KIDN[m]); else sparkle(0);
       setTimeout(()=>{ b.classList.remove('sel'); startMode(m); ksel=null; },550); });
     g.appendChild(b); }); }
 // long-press button to the adult screen
@@ -1739,14 +1815,14 @@ $('#manBack').addEventListener('click',()=>show('home'));
 
 vLoadAll(); updStk(); buildIcons(); renderRec(); renderNight(); if(S.kidsHome){ renderKids(); show('kids'); } splash(); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ buildIcons(); if($('#kids').classList.contains('on')) renderKids(); });
 /* ================= AUTO UPDATE (GitHub Pages etc.) ================= */
-const APP_VERSION='20261107232200';
+const APP_VERSION='20261108101320';
 async function checkUpdate(){
   if(!/^https?:$/.test(location.protocol)||location.hostname.endsWith('claude.ai')) return;
   try{ const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'}); if(!r.ok) return; const j=await r.json();
     if(j.v&&j.v!==APP_VERSION){ if(!mode&&!curId) location.reload(); else window._pendingReload=true; } }catch(e){}
 }
 setInterval(checkUpdate,60000); document.addEventListener('visibilitychange',()=>{ if(!document.hidden) checkUpdate(); }); setTimeout(checkUpdate,3000);
-const _goHome=goHome; goHome=function(){ _goHome(); saveLog(); renderRec(); renderNight(); if(window._pendingReload) location.reload(); };
+const _goHome=goHome; goHome=function(){ _goHome(); try{ SFX.back(); }catch(e){} saveLog(); renderRec(); renderNight(); if(window._pendingReload) location.reload(); };
 </script>
 </body>
 </html>

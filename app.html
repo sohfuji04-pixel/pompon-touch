@@ -393,6 +393,7 @@ input[type=range]{width:100%;margin-top:10px;accent-color:#ffb3cf}
       <li><b>🗣 ことば</b>：「ことばを ろくおん」で、お子さんや パパ・ママの声を 1つずつ ろくおんすると、タッチしたときに その声で 名前を いいます（こどもっぽい高い声にも できます）。</li><li><b>🎵 ホームのBGM</b>：ホーム画面の 音楽の オン・オフと 音量。</li>
       <li><b>🎤 おうちの人の声</b>：「ばあ！」「おいしいね」「すごいね！」を パパ・ママの声で 録音できます（スマホの中だけに保存）。</li>
       <li><b>ホームに出すあそび</b>：オフにした あそびは 大人用の画面に 出ません。</li></ul></section>
+    <section><h3>🤖 Androidアプリ</h3><p>Androidは アプリとして インストールできます。<a href="https://github.com/sohfuji04-pixel/pompon-touch/releases/latest/download/pompon-touch.apk">ここから ダウンロード</a> → ひらいて インストール（「この提供元のアプリを許可」が出たら オン）。全画面・画面がきえない・もどるボタンで とじない 設定になっています。あそびの 更新は 自動で はんえい されます。</p></section>
     <section><h3>📱 全画面で あそぶ（下のバーを けす）</h3><p><b>iPhone</b>は Safariの しくみ上、ページを 全画面に できません。<b>「ホーム画面に追加」</b>して、ホーム画面の アイコンから ひらくと バーなしの 全画面に なります。<b>Android</b>は 右上の ⛶ ボタンや、タッチすると 自動で 全画面に なります。</p><p>iPhone：Safariで開いて 共有ボタン →「ホーム画面に追加」。Android：Chromeの メニュー →「ホーム画面に追加」。アプリのように 全画面で ひらけます。一度 ひらけば 電波のない場所でも あそべます。</p></section>
     <section><h3>❓ こまったときは</h3>
       <ul><li><b>音が出ない</b>：iPhoneの 消音スイッチ（マナーモード）を オフにして、音量を上げてください。最初の1回は 画面に タッチすると 音が出るように なります。</li>
@@ -1603,7 +1604,8 @@ const BGM={on:false,timer:0,next:0,step:0,g:null,
     if(i%2===1) noiseBurst({dur:.03,vol:.012,ft:'highpass',freq:7000,dest:d,at}); }
 };
 const HOMEISH=['kids','home','settings','book','manual'];
-const isStandalone=()=>!!(navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches));
+const isApp=/; wv\)/.test(navigator.userAgent);
+const isStandalone=()=>!!(isApp||navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches));
 const isIOS=()=>/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 const canFS=()=>!!(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen)&&!/iPhone|iPod/.test(navigator.userAgent);
 function goFull(quiet){ if(isStandalone()||document.fullscreenElement||document.webkitFullscreenElement) return;
@@ -1861,7 +1863,7 @@ $('#manBack').addEventListener('click',()=>show('home'));
 
 vLoadAll(); updStk(); buildIcons(); renderRec(); renderNight(); if(S.kidsHome){ renderKids(); show('kids'); } splash(); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ buildIcons(); if($('#kids').classList.contains('on')) renderKids(); });
 /* ================= AUTO UPDATE (GitHub Pages etc.) ================= */
-const APP_VERSION='20261108133025';
+const APP_VERSION='20261108133853';
 async function checkUpdate(){
   if(!/^https?:$/.test(location.protocol)||location.hostname.endsWith('claude.ai')) return;
   try{ const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'}); if(!r.ok) return; const j=await r.json();

@@ -1,7 +1,7 @@
 {
   "name": "ぽんぽんタッチ",
   "short_name": "ぽんぽん",
-  "description": "赤ちゃんとペットのためのタッチ遊び",
+  "description": "1歳半からのタッチあそび",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
